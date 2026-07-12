@@ -1,27 +1,87 @@
 ---
 import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { 
+	title = "Schedule to Calendar | AI Timetable Calendar Sync", 
+	description = "An ultra-lean, privacy-focused web utility designed to instantly sync your schedule to Google Calendar. Simply upload a screenshot and review."
+} = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		
+		<!-- SEO Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://scheduletocalendar.com" />
 	</head>
-	<body>
-		<slot />
+	<body class="flex flex-col min-h-dvh h-auto">
+		<!-- Header / Navigation -->
+		<header class="sticky top-0 z-50 w-full h-16 shrink-0 border-b border-hairline bg-canvas/80 backdrop-blur-md">
+			<div class="mx-auto max-w-[1400px] h-full px-4 md:px-8 flex items-center justify-between">
+				<a href="/" class="flex items-center gap-2.5 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded-xs">
+					<!-- Vercel logo style triangle icon + logo text -->
+					<svg class="w-5 h-5 md:w-[22px] md:h-[22px] text-ink fill-current" viewBox="0 0 512 512" aria-hidden="true">
+						<path d="M256,48L464,408H48Z" />
+					</svg>
+					<span class="font-sans font-semibold text-sm md:text-[15px] tracking-[-0.3px] text-ink select-none">
+						Schedule to Calendar
+					</span>
+				</a>
+
+				<nav class="hidden md:flex items-center gap-6 lg:gap-8">
+					<a href="#" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">Features</a>
+					<a href="#" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">How it Works</a>
+				</nav>
+
+				<div class="flex items-center gap-2.5 md:gap-4">
+					<a href="https://github.com" target="_blank" rel="noopener noreferrer" class="h-8 md:h-9 px-3 md:px-4 text-xs md:text-sm font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-ink inline-flex items-center justify-center transition-all duration-200 active:bg-canvas-soft-2 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2">
+						GitHub
+					</a>
+				</div>
+			</div>
+		</header>
+
+		<main class="flex-grow flex flex-col w-full shrink-0">
+			<slot />
+		</main>
+
+		<!-- Footer -->
+		<footer class="w-full border-t border-hairline bg-canvas py-8 md:py-10 shrink-0">
+			<div class="mx-auto max-w-[1400px] px-4 md:px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+				<div class="flex flex-col gap-1">
+					<div class="flex items-center gap-2">
+						<svg class="w-4 h-4 text-mute fill-current" viewBox="0 0 512 512" aria-hidden="true">
+							<path d="M256,48L464,408H48Z" />
+						</svg>
+						<span class="font-mono text-[12px] uppercase text-mute tracking-widest font-semibold">
+							Schedule to Calendar
+						</span>
+					</div>
+					<p class="text-mute text-xs">
+						© {new Date().getFullYear()} scheduletocalendar.com. All rights reserved.
+					</p>
+				</div>
+
+				<div class="flex flex-wrap gap-x-6 gap-y-3">
+					<a href="#" class="text-mute hover:text-body text-xs transition-colors duration-200">Privacy Policy</a>
+					<a href="#" class="text-mute hover:text-body text-xs transition-colors duration-200">Terms of Service</a>
+					<a href="mailto:support@scheduletocalendar.com" class="text-mute hover:text-body text-xs transition-colors duration-200">Support</a>
+				</div>
+			</div>
+		</footer>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
-

@@ -1,11 +1,200 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// index.astro
+// Core landing page for Schedule to Calendar
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import UploadZone from '../components/UploadZone.astro';
 ---
-
 <Layout>
-	<Welcome />
+  <section id="uploader" class="relative overflow-hidden min-h-[calc(100dvh-64px+20px)] w-full bg-canvas flex flex-col items-center justify-center pt-6 pb-20 md:pt-8 md:pb-28 border-b border-hairline">
+    <!-- Atmospheric Ambient Mesh Gradient Background (Vercel Style) -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-40 blur-[130px] flex items-center justify-center">
+      <div class="w-[300px] h-[300px] rounded-full bg-gradient-to-r from-gradient-develop-start to-gradient-develop-end transform translate-x-[-100px] translate-y-[-50px]"></div>
+      <div class="w-[320px] h-[320px] rounded-full bg-gradient-to-r from-gradient-preview-start to-gradient-preview-end transform translate-x-[120px] translate-y-[20px]"></div>
+      <div class="w-[280px] h-[280px] rounded-full bg-gradient-to-r from-gradient-ship-start to-gradient-ship-end transform translate-y-[-120px]"></div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-6 text-center flex flex-col items-center gap-4">
+      <!-- Announcement Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-[6px] bg-canvas-soft-2 border border-hairline rounded-full shadow-level-1 transition-all duration-300 hover:border-hairline-strong select-none">
+        <span class="inline-block px-1 py-[2px] bg-primary text-on-primary text-[9px] font-bold uppercase rounded-xs tracking-wider">New</span>
+        <span class="font-sans text-[12px] font-medium text-body">Instant Timetable to Google Calendar sync</span>
+      </div>
+
+      <!-- Main Landing Title -->
+      <h1 class="max-w-3xl font-sans font-extrabold text-[36px] sm:text-[44px] md:text-[56px] leading-[1.05] tracking-[-2.4px] text-ink text-balance">
+        Sync your timetable in seconds.
+      </h1>
+
+      <!-- Supporting Body -->
+      <p class="max-w-2xl font-sans text-body text-sm sm:text-base leading-relaxed text-balance opacity-90">
+        Drop a screenshot of your schedule (work, class, or gym). Our privacy-first vision model instantly extracts your classes so you can import them to your google calendar with just a click.
+      </p>
+
+      <!-- Drag-and-Drop Zone Component -->
+      <div class="w-full max-w-2xl mt-4">
+        <UploadZone />
+      </div>
+
+      <!-- Parsed Events Preview Drawer (Hidden by default, triggered on custom timetableParsed event) -->
+      <div id="parsed-results-wrapper" class="hidden w-full max-w-2xl mt-6 flex flex-col gap-4 text-left transition-all duration-300">
+        <div class="w-full text-center mb-2">
+          <span class="font-mono text-[11px] text-mute uppercase tracking-widest font-bold">Step 2</span>
+          <h2 class="font-sans font-semibold text-lg md:text-xl text-ink tracking-[-0.6px] mt-1">
+            Review parsed schedule
+          </h2>
+        </div>
+
+        <!-- Vercel-like Preview Card -->
+        <div class="bg-canvas border border-hairline rounded-md shadow-level-3 p-4 flex flex-col gap-3 overflow-hidden">
+          <div class="flex items-center justify-between border-b border-hairline pb-3">
+            <h3 class="font-sans font-semibold text-sm tracking-[-0.28px] text-ink">
+              Extracted Calendar Items
+            </h3>
+            <span class="font-mono text-[11px] text-success bg-link-bg-soft px-2 py-1 rounded-pill font-medium">
+              3 events parsed
+            </span>
+          </div>
+
+          <!-- Event Data Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse text-left">
+              <thead>
+                <tr class="border-b border-hairline text-mute">
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Class / Event</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Day</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Time</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Location</th>
+                </tr>
+              </thead>
+              <tbody id="parsed-events-tbody" class="divide-y divide-hairline">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="flex items-center justify-end gap-3 pt-3 border-t border-hairline mt-2">
+            <button 
+              id="btn-discard" 
+              class="h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+            >
+              Clear & Reupload
+            </button>
+            <button 
+              id="btn-sync" 
+              class="h-9 px-3 text-xs font-medium rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+            >
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M256,48C141.31,48,48,141.31,48,256S141.31,464,256,464,464,370.69,464,256,370.69,48,256,48Zm96.25,222.51l-128,80A15.86,15.86,0,0,1,216,352a16,16,0,0,1-16-16V176a16,16,0,0,1,24.25-13.49l128,80a16,16,0,0,1,0,27Z" />
+              </svg>
+              Sync to Google Calendar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mock Toast Alert -->
+  <div 
+    id="toast-notification" 
+    class="fixed bottom-6 right-6 z-[100] transform translate-y-24 opacity-0 transition-all duration-300 p-3 bg-primary text-on-primary rounded-sm shadow-level-4 flex items-center gap-2 max-w-sm pointer-events-none"
+    role="alert"
+  >
+    <svg class="w-4 h-4 text-green-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span id="toast-message" class="text-xs font-sans font-medium">Calendar sync completed successfully!</span>
+  </div>
 </Layout>
+
+<script>
+  const resultsWrapper = document.getElementById('parsed-results-wrapper');
+  const tbody = document.getElementById('parsed-events-tbody');
+  const discardBtn = document.getElementById('btn-discard');
+  const syncBtn = document.getElementById('btn-sync');
+  const toast = document.getElementById('toast-notification');
+  const toastMessage = document.getElementById('toast-message');
+
+  // Listen to the custom event bubbled up from UploadZone
+  document.addEventListener('timetableParsed', (event: Event) => {
+    const customEvent = event as CustomEvent;
+    const data = customEvent.detail;
+    
+    if (resultsWrapper && tbody && data?.events) {
+      // 1. Clear previous rows
+      tbody.innerHTML = '';
+
+      // 2. Populate new rows
+      data.events.forEach((evt: any) => {
+        const row = document.createElement('tr');
+        row.className = 'group hover:bg-canvas-soft-2 transition-colors duration-150';
+        
+        row.innerHTML = `
+          <td class="py-3 px-2 font-sans text-[13px] font-semibold text-ink">${evt.title}</td>
+          <td class="py-3 px-2 font-sans text-[13px] text-body">${formatDay(evt.day_of_week)}</td>
+          <td class="py-3 px-2 font-mono text-[12px] text-body">${evt.start_time} - ${evt.end_time}</td>
+          <td class="py-3 px-2 font-sans text-[13px] text-mute">${evt.location || 'N/A'}</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      // 3. Smooth show the results card
+      resultsWrapper.classList.remove('hidden');
+      resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+
+  // Discard / Reupload handler
+  if (discardBtn) {
+    discardBtn.addEventListener('click', () => {
+      if (resultsWrapper) {
+        resultsWrapper.classList.add('hidden');
+        window.scrollTo({ top: document.getElementById('uploader')?.offsetTop || 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  // Mock Sync Button
+  if (syncBtn) {
+    syncBtn.addEventListener('click', () => {
+      showToast('Syncing with Google Calendar…', false);
+      
+      setTimeout(() => {
+        showToast('Successfully synced 3 events to your Google Calendar!', true);
+      }, 1500);
+    });
+  }
+
+  function formatDay(day: string) {
+    if (!day) return '';
+    return day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
+  }
+
+  function showToast(message: string, isSuccess: boolean) {
+    if (toast && toastMessage) {
+      toastMessage.textContent = message;
+      
+      // Dynamic color/style adjustments if needed
+      if (isSuccess) {
+        toast.classList.remove('bg-primary/95');
+        toast.classList.add('bg-primary');
+      } else {
+        toast.classList.add('bg-primary/95');
+      }
+
+      // Display toast
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      // If it is success state, fade it out after 4 seconds
+      if (isSuccess) {
+        setTimeout(() => {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-24', 'opacity-0');
+        }, 4000);
+      }
+    }
+  }
+</script>
