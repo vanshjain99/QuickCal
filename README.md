@@ -5,6 +5,14 @@ QuickCal (available at [calendarimport.com](https://calendarimport.com)) is a mo
 Simply upload a screenshot, image, PDF, or Excel spreadsheet of your schedule, verify the extracted details, and sync them directly to your Google Calendar.
 
 ---
+## 🎬 Demo Video
+
+<video controls playsinline preload="metadata" width="100%">
+  <source src="https://YOUR_PUBLIC_MP4_URL/demo.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+---
 
 ## 🚀 Key Features
 
