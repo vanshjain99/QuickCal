@@ -56,6 +56,36 @@ import UploadZone from '../components/UploadZone.astro';
             </span>
           </div>
 
+          <!-- Top Action Buttons (Duplicated) -->
+          <div class="flex items-center justify-between pb-3 border-b border-hairline mb-2">
+            <button 
+              type="button"
+              class="btn-add-row h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+              </svg>
+              Add New Row
+            </button>
+            <div class="flex items-center gap-3">
+              <button 
+                type="button"
+                class="btn-discard h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+              >
+                Clear & Reupload
+              </button>
+              <button 
+                type="button"
+                class="btn-sync h-9 px-3 text-xs font-medium rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+              >
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 512 512" aria-hidden="true">
+                  <path d="M256,48C141.31,48,48,141.31,48,256S141.31,464,256,464,464,370.69,464,256,370.69,48,256,48Zm96.25,222.51l-128,80A15.86,15.86,0,0,1,216,352a16,16,0,0,1-16-16V176a16,16,0,0,1,24.25-13.49l128,80a16,16,0,0,1,0,27Z" />
+                </svg>
+                Confirm & Sync with Google Calendar
+              </button>
+            </div>
+          </div>
+
           <!-- Event Data Table -->
           <div class="overflow-x-auto">
             <table class="w-full border-collapse text-left">
@@ -79,7 +109,7 @@ import UploadZone from '../components/UploadZone.astro';
           <div class="flex items-center justify-between pt-3 border-t border-hairline mt-2">
             <button 
               id="btn-add-row" 
-              class="h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+              class="btn-add-row h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
             >
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -89,13 +119,13 @@ import UploadZone from '../components/UploadZone.astro';
             <div class="flex items-center gap-3">
               <button 
                 id="btn-discard" 
-                class="h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+                class="btn-discard h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
               >
                 Clear & Reupload
               </button>
               <button 
                 id="btn-sync" 
-                class="h-9 px-3 text-xs font-medium rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+                class="btn-sync h-9 px-3 text-xs font-medium rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
               >
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 512 512" aria-hidden="true">
                   <path d="M256,48C141.31,48,48,141.31,48,256S141.31,464,256,464,464,370.69,464,256,370.69,48,256,48Zm96.25,222.51l-128,80A15.86,15.86,0,0,1,216,352a16,16,0,0,1-16-16V176a16,16,0,0,1,24.25-13.49l128,80a16,16,0,0,1,0,27Z" />
@@ -103,6 +133,49 @@ import UploadZone from '../components/UploadZone.astro';
                 Confirm & Sync with Google Calendar
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success Confirmation Card (Hidden by default) -->
+      <div id="sync-success-wrapper" class="hidden w-full max-w-md mt-6 flex flex-col gap-4 text-center items-center transition-all duration-500 transform translate-y-4 opacity-0">
+        <div class="bg-canvas border border-hairline rounded-md shadow-level-4 p-8 flex flex-col items-center gap-5 w-full">
+          <!-- Animated Check Circle (Premium UI SVG) -->
+          <div class="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center text-success animate-bounce-subtle">
+            <svg class="w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path class="draw-path" d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline class="draw-checkmark" points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          
+          <div class="flex flex-col gap-2">
+            <h3 class="font-sans font-extrabold text-xl text-ink tracking-[-0.6px]">
+              Sync Completed!
+            </h3>
+            <p id="success-description" class="font-sans text-xs text-body leading-relaxed max-w-sm">
+              Successfully synced all your classes to your Google Calendar.
+            </p>
+          </div>
+
+          <!-- Action buttons for success -->
+          <div class="flex flex-col sm:flex-row gap-3 w-full mt-2">
+            <a 
+              href="https://calendar.google.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="flex-1 h-10 text-xs font-semibold rounded-sm bg-primary text-on-primary hover:bg-primary/95 flex items-center justify-center gap-1.5 transition-all duration-200 shadow-level-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+            >
+              Open Google Calendar
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+            <button 
+              id="btn-sync-another"
+              class="flex-1 h-10 text-xs font-semibold rounded-sm border border-hairline hover:border-hairline-strong bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+            >
+              Sync Another Schedule
+            </button>
           </div>
         </div>
       </div>
@@ -126,9 +199,9 @@ import UploadZone from '../components/UploadZone.astro';
   const resultsWrapper = document.getElementById('parsed-results-wrapper');
   const uploadWrapper = document.getElementById('upload-zone-wrapper');
   const tbody = document.getElementById('parsed-events-tbody');
-  const discardBtn = document.getElementById('btn-discard');
-  const addRowBtn = document.getElementById('btn-add-row');
-  const syncBtn = document.getElementById('btn-sync');
+  const discardBtns = document.querySelectorAll('.btn-discard');
+  const addRowBtns = document.querySelectorAll('.btn-add-row');
+  const syncBtns = document.querySelectorAll('.btn-sync');
   const toast = document.getElementById('toast-notification');
   const toastMessage = document.getElementById('toast-message');
 
@@ -371,8 +444,8 @@ import UploadZone from '../components/UploadZone.astro';
   }
 
   // Add New Row handler
-  if (addRowBtn) {
-    addRowBtn.addEventListener('click', () => {
+  addRowBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
       const newEvent = {
         title: "New Class",
         day_of_week: "MONDAY",
@@ -389,11 +462,11 @@ import UploadZone from '../components/UploadZone.astro';
         tbody.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
-  }
+  });
 
   // Discard / Reupload handler
-  if (discardBtn) {
-    discardBtn.addEventListener('click', () => {
+  discardBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
       currentEvents = [];
       if (resultsWrapper) {
         resultsWrapper.classList.add('hidden');
@@ -403,19 +476,190 @@ import UploadZone from '../components/UploadZone.astro';
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  });
+
+  // Google Identity Services (GIS) Token Client State
+  let tokenClient: any = null;
+
+  function initTokenClient() {
+    if (tokenClient) return tokenClient;
+
+    if (typeof window !== 'undefined' && (window as any).google?.accounts?.oauth2) {
+      const clientId = import.meta.env.PUBLIC_GOOGLE_CLIENT_ID;
+      if (!clientId) {
+        console.error('PUBLIC_GOOGLE_CLIENT_ID environment variable is missing.');
+        showToast('Configuration error: Google Client ID is not set.', false);
+        return null;
+      }
+
+      tokenClient = (window as any).google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'https://www.googleapis.com/auth/calendar.events',
+        callback: async (tokenResponse: any) => {
+          if (tokenResponse && tokenResponse.access_token) {
+            await executeSync(tokenResponse.access_token);
+          } else {
+            showToast('OAuth authentication failed: No access token returned.', false);
+            resetSyncButton();
+          }
+        },
+        error_callback: (err: any) => {
+          console.error('Google OAuth error:', err);
+          showToast(`Authentication error: ${err.message || 'Check browser console.'}`, false);
+          resetSyncButton();
+        }
+      });
+      return tokenClient;
+    }
+    return null;
   }
 
-  // Mock Sync Button
-  if (syncBtn) {
-    syncBtn.addEventListener('click', () => {
-      showToast('Syncing with Google Calendar…', false);
+  function resetSyncButton() {
+    syncBtns.forEach(btn => {
+      (btn as HTMLButtonElement).disabled = false;
+      btn.innerHTML = `
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 512 512" aria-hidden="true">
+          <path d="M256,48C141.31,48,48,141.31,48,256S141.31,464,256,464,464,370.69,464,256,370.69,48,256,48Zm96.25,222.51l-128,80A15.86,15.86,0,0,1,216,352a16,16,0,0,1-16-16V176a16,16,0,0,1,24.25-13.49l128,80a16,16,0,0,1,0,27Z" />
+        </svg>
+        Confirm & Sync with Google Calendar
+      `;
+    });
+  }
+
+  async function executeSync(accessToken: string) {
+    syncBtns.forEach(btn => {
+      (btn as HTMLButtonElement).disabled = true;
+      btn.textContent = 'Syncing schedule...';
+    });
+
+    try {
+      // Clean and sanitize the event payload to strictly match Pydantic schema
+      const sanitizedEvents = currentEvents.map(evt => ({
+        title: evt.title || 'Untitled Class',
+        day_of_week: evt.day_of_week || 'MONDAY',
+        start_time: evt.start_time || '09:00',
+        end_time: evt.end_time || '10:00',
+        location: evt.location ? evt.location.trim() : null,
+        weekly_days: Array.isArray(evt.weekly_days) && evt.weekly_days.length > 0 
+          ? evt.weekly_days 
+          : [evt.day_of_week || 'MONDAY']
+      }));
+
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Kolkata';
+
+      const payload = {
+        access_token: accessToken,
+        events: sanitizedEvents,
+        timezone: tz
+      };
+
+      console.log('Sending sync payload to backend:', payload);
+
+      const response = await fetch('http://127.0.0.1:8000/api/v1/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        let errText = 'Server error occurred during synchronization.';
+        try {
+          const errData = await response.json();
+          if (errData && errData.detail) {
+            errText = typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail);
+          }
+        } catch (_) {
+          errText = response.statusText || errText;
+        }
+        throw new Error(errText);
+      }
+
+      const resData = await response.json();
+      console.log('Sync response:', resData);
+
+      // Show success screen
+      showSuccessScreen(resData.synced_count || sanitizedEvents.length);
+
+    } catch (err: any) {
+      console.error('Sync failure:', err);
+      showToast(err.message || 'Sync failed due to a network error.', false);
+      resetSyncButton();
+    }
+  }
+
+  function showSuccessScreen(count: number) {
+    if (resultsWrapper) {
+      resultsWrapper.classList.add('hidden');
+    }
+
+    const successWrapper = document.getElementById('sync-success-wrapper');
+    const successDescription = document.getElementById('success-description');
+
+    if (successWrapper) {
+      if (successDescription) {
+        successDescription.textContent = `Successfully synchronized ${count} event${count === 1 ? '' : 's'} directly to your Google Calendar.`;
+      }
       
-      console.log('Syncing calendar events to Google Calendar:', JSON.stringify(currentEvents, null, 2));
-      
+      successWrapper.classList.remove('hidden');
+      // Trigger CSS transition
       setTimeout(() => {
-        const count = currentEvents.length;
-        showToast(`Successfully synced ${count} event${count === 1 ? '' : 's'} to your Google Calendar!`, true);
-      }, 1500);
+        successWrapper.classList.remove('translate-y-4', 'opacity-0');
+        successWrapper.classList.add('translate-y-0', 'opacity-100');
+      }, 50);
+
+      successWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  // Sync Button Handlers
+  syncBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Disable and show status on all sync buttons
+      syncBtns.forEach(b => {
+        (b as HTMLButtonElement).disabled = true;
+        b.textContent = 'Authenticating...';
+      });
+
+      const client = initTokenClient();
+      if (client) {
+        client.requestAccessToken();
+      } else {
+        if (!(window as any).google?.accounts?.oauth2) {
+          showToast('Google identity library is still loading. Please try again in a moment.', false);
+        } else {
+          showToast('Failed to initialize Google OAuth library. Check configuration.', false);
+        }
+        resetSyncButton();
+      }
+    });
+  });
+
+  // Sync Another Button Handler
+  const syncAnotherBtn = document.getElementById('btn-sync-another');
+  if (syncAnotherBtn) {
+    syncAnotherBtn.addEventListener('click', () => {
+      // Clear state
+      currentEvents = [];
+      
+      // Hide success screen
+      const successWrapper = document.getElementById('sync-success-wrapper');
+      if (successWrapper) {
+        successWrapper.classList.add('hidden', 'translate-y-4', 'opacity-0');
+        successWrapper.classList.remove('translate-y-0', 'opacity-100');
+      }
+
+      // Show upload zone
+      if (uploadWrapper) {
+        uploadWrapper.classList.remove('hidden');
+      }
+
+      // Reset sync button text/disabled
+      resetSyncButton();
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -428,22 +672,64 @@ import UploadZone from '../components/UploadZone.astro';
     if (toast && toastMessage) {
       toastMessage.textContent = message;
       
+      const svgIcon = toast.querySelector('svg');
+      
       if (isSuccess) {
-        toast.classList.remove('bg-primary/95');
+        toast.classList.remove('bg-error-deep');
         toast.classList.add('bg-primary');
+        if (svgIcon) {
+          svgIcon.className.baseVal = "w-4 h-4 text-green-400 shrink-0";
+          svgIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />';
+        }
       } else {
-        toast.classList.add('bg-primary/95');
+        toast.classList.remove('bg-primary');
+        toast.classList.add('bg-error-deep');
+        if (svgIcon) {
+          svgIcon.className.baseVal = "w-4 h-4 text-white shrink-0";
+          svgIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />';
+        }
       }
 
       toast.classList.remove('translate-y-24', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
 
-      if (isSuccess) {
-        setTimeout(() => {
-          toast.classList.remove('translate-y-0', 'opacity-100');
-          toast.classList.add('translate-y-24', 'opacity-0');
-        }, 4000);
+      if ((window as any).toastTimeout) {
+        clearTimeout((window as any).toastTimeout);
       }
+      
+      (window as any).toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 4000);
     }
   }
 </script>
+
+<style>
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes bounce-subtle {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+  .animate-bounce-subtle {
+    animation: bounce-subtle 2s ease-in-out infinite;
+  }
+  .draw-path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: draw 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .draw-checkmark {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: draw 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  }
+</style>

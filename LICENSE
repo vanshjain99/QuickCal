@@ -1,0 +1,46 @@
+QUICKCAL SOURCE-AVAILABLE & CONTRIBUTION LICENSE
+
+Version 1.0, July 2026
+
+Copyright (c) 2026 scheduletocalendar.com. All rights reserved.
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND CONTRIBUTION
+
+1. DEFINITIONS
+
+"License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 6 of this document.
+
+"Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+
+"You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+
+"Source" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.
+
+"Contribution" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner.
+
+2. GRANT OF SOURCE LICENSE
+
+Subject to the terms and conditions of this License, Licensor hereby grants to You a worldwide, non-exclusive, no-charge, royalty-free license to download, read, compile, and run the Source form of the software solely for:
+a) Your personal, private, non-commercial evaluation and use;
+b) Developing and submitting Contributions (such as bug fixes, optimizations, or new features) back to the official repository.
+
+3. RESTRICTIONS ON DISTRIBUTION AND REDISTRIBUTION
+
+You may NOT:
+a) Redistribute, republish, mirror, sublicense, transfer, lease, or sell the Source form or binary distributions of this software, modified or unmodified, to any third party;
+b) Host the software as a public, commercial, or non-commercial cloud service or online utility accessible by third parties outside of Your personal evaluation;
+c) Fork the repository for the purpose of creating a competing product or distributing it under a different brand name.
+
+4. SUBMISSION OF CONTRIBUTIONS
+
+Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.
+
+5. DISCLAIMER OF WARRANTY
+
+UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING, LICENSOR PROVIDES THE WORK (AND EACH CONTRIBUTOR PROVIDES ITS CONTRIBUTIONS) ON AN "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using the Work and assume any risks associated with Your exercise of permissions under this License.
+
+6. LIMITATION OF LIABILITY
+
+IN NO EVENT AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE), CONTRACT, OR OTHERWISE, UNLESS REQUIRED BY APPLICABLE LAW (SUCH AS DELIBERATE AND GROSSLY NEGLIGENCE ACTS) OR AGREED TO IN WRITING, SHALL ANY CONTRIBUTOR BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER ARISING AS A RESULT OF THIS LICENSE OR OUT OF THE USE OR INABILITY TO USE THE WORK (INCLUDING BUT NOT LIMITED TO DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES), EVEN IF SUCH CONTRIBUTOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+END OF TERMS AND CONDITIONS

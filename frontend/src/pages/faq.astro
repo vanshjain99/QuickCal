@@ -1,0 +1,167 @@
+---
+// src/pages/faq.astro
+// FAQ Multi-Page Route for QuickCal
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="QuickCal FAQ | Import Schedule, Excel & PDF to Google Calendar"
+  description="Frequently asked questions about QuickCal. Learn how to convert and import class schedules, timetables, Excel, CSV, and PDF schedules directly to your Google Calendar."
+>
+  <section class="relative overflow-hidden min-h-[calc(100dvh-64px+20px)] w-full bg-canvas flex flex-col items-center pt-12 pb-20 md:pt-16 md:pb-28 border-b border-hairline animate-fade-in">
+    <!-- Atmospheric Background -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-35 blur-[130px] flex items-center justify-center">
+      <div class="w-[350px] h-[350px] rounded-full bg-gradient-to-r from-gradient-develop-start to-gradient-develop-end transform -translate-x-1/2"></div>
+      <div class="w-[300px] h-[300px] rounded-full bg-gradient-to-r from-gradient-preview-start to-gradient-preview-end transform translate-x-1/2"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 text-left flex flex-col gap-8">
+      <!-- Heading Section -->
+      <div class="text-center flex flex-col gap-3">
+        <span class="font-mono text-[11px] text-mute uppercase tracking-widest font-bold">Frequently Asked Questions</span>
+        <h1 class="font-sans font-extrabold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-[-1.6px] text-ink">
+          QuickCal FAQ & Guides
+        </h1>
+        <p class="font-sans text-body text-sm sm:text-base leading-relaxed text-balance max-w-xl mx-auto opacity-95">
+          Find fast answers to common questions about importing and synchronizing timetables, class schedules, Excel tables, and PDF schedules to Google Calendar.
+        </p>
+      </div>
+
+      <!-- FAQ Accordion List -->
+      <div class="flex flex-col gap-4 mt-6">
+        <!-- Question 1 -->
+        <details class="group bg-canvas border border-hairline rounded-md shadow-level-2 overflow-hidden transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-5 font-sans font-semibold text-sm sm:text-base text-ink cursor-pointer list-none select-none hover:bg-canvas-soft-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-primary">
+            How do I import my work or class schedule into Google Calendar from an image?
+            <span class="transition-transform duration-300 group-open:rotate-180 text-mute shrink-0 ml-4">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="p-5 border-t border-hairline bg-canvas-soft font-sans text-xs sm:text-sm text-body leading-relaxed flex flex-col gap-3">
+            <p>
+              With QuickCal, you can <strong>extract a schedule from an image to google calendar</strong> in seconds. 
+              Simply take a screenshot or upload an image of your class schedule, university timetable, or work shifts. Our system automatically parses the events, lists them in an editable table for your review, and exports them directly into your primary Google Calendar with a single click.
+            </p>
+            <p>
+              No manual entry is required, saving you from tedious date copying and formatting errors.
+            </p>
+          </div>
+        </details>
+
+        <!-- Question 2 -->
+        <details class="group bg-canvas border border-hairline rounded-md shadow-level-2 overflow-hidden transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-5 font-sans font-semibold text-sm sm:text-base text-ink cursor-pointer list-none select-none hover:bg-canvas-soft-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-primary">
+            How does Gemini add events from a timetable image to Google Calendar?
+            <span class="transition-transform duration-300 group-open:rotate-180 text-mute shrink-0 ml-4">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="p-5 border-t border-hairline bg-canvas-soft font-sans text-xs sm:text-sm text-body leading-relaxed flex flex-col gap-3">
+            <p>
+              Our backend utilizes the advanced <strong>Google Gemini Multimodal Vision API</strong> to process and understand your timetable image. 
+              The AI models extract the precise text, identify event titles, locations, and match weekday timings (e.g. MONDAY 09:00 - 10:30). 
+              The parsed schema is sent to your client browser where you review it, and then our secure endpoint pushes the events directly to your calendar using the official Google Calendar API.
+            </p>
+          </div>
+        </details>
+
+        <!-- Question 3 -->
+        <details class="group bg-canvas border border-hairline rounded-md shadow-level-2 overflow-hidden transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-5 font-sans font-semibold text-sm sm:text-base text-ink cursor-pointer list-none select-none hover:bg-canvas-soft-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-primary">
+            How can I convert and import Excel or CSV spreadsheets into Google Calendar?
+            <span class="transition-transform duration-300 group-open:rotate-180 text-mute shrink-0 ml-4">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="p-5 border-t border-hairline bg-canvas-soft font-sans text-xs sm:text-sm text-body leading-relaxed flex flex-col gap-3">
+            <p>
+              To <strong>sync excel to google calendar</strong> or <strong>import csv to google calendar</strong>:
+            </p>
+            <ul class="list-disc pl-5 flex flex-col gap-1">
+              <li>Upload your Excel sheet (<code>.xls</code>, <code>.xlsx</code>) or CSV directly to the upload zone.</li>
+              <li>Our backend service parses the rows, extracting titles, start/end times, and weekly recurrences.</li>
+              <li>Once verified on the review screen, click <strong>Confirm & Sync</strong> to write the schedule to your calendar.</li>
+            </ul>
+            <p>
+              This is the easiest way to <strong>convert excel to google calendar</strong> without having to build custom templates or write CSV loaders.
+            </p>
+          </div>
+        </details>
+
+        <!-- Question 4 -->
+        <details class="group bg-canvas border border-hairline rounded-md shadow-level-2 overflow-hidden transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-5 font-sans font-semibold text-sm sm:text-base text-ink cursor-pointer list-none select-none hover:bg-canvas-soft-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-primary">
+            Can I upload and convert PDF timetables to Google Calendar?
+            <span class="transition-transform duration-300 group-open:rotate-180 text-mute shrink-0 ml-4">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="p-5 border-t border-hairline bg-canvas-soft font-sans text-xs sm:text-sm text-body leading-relaxed flex flex-col gap-3">
+            <p>
+              Yes! QuickCal allows you to <strong>import pdf to google calendar</strong>. 
+              Our vision engine scans PDF documents (like class syllabus documents, course rosters, or gym timetables), extracts schedule blocks, and sets them up in your Google Calendar as recurring weekly events.
+            </p>
+          </div>
+        </details>
+
+        <!-- Question 5 -->
+        <details class="group bg-canvas border border-hairline rounded-md shadow-level-2 overflow-hidden transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-5 font-sans font-semibold text-sm sm:text-base text-ink cursor-pointer list-none select-none hover:bg-canvas-soft-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-primary">
+            Is there a specific template required for importing schedules?
+            <span class="transition-transform duration-300 group-open:rotate-180 text-mute shrink-0 ml-4">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="p-5 border-t border-hairline bg-canvas-soft font-sans text-xs sm:text-sm text-body leading-relaxed flex flex-col gap-3">
+            <p>
+              Unlike standard Google Calendar CSV imports, QuickCal does <strong>not</strong> require a rigid <strong>google calendar import schedule template</strong>. 
+              Because our system is powered by multimodal AI, it can read virtually any schedule format: university grids, screenshots from mobile apps, calendar tables, Excel charts, or text documents. You can upload it raw, review the parsed rows, and edit them on the fly.
+            </p>
+          </div>
+        </details>
+
+        <!-- Question 6 -->
+        <details class="group bg-canvas border border-hairline rounded-md shadow-level-2 overflow-hidden transition-all duration-300 [&_summary::-webkit-details-marker]:hidden">
+          <summary class="flex items-center justify-between p-5 font-sans font-semibold text-sm sm:text-base text-ink cursor-pointer list-none select-none hover:bg-canvas-soft-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-primary">
+            How secure is QuickCal when connecting to my Google account?
+            <span class="transition-transform duration-300 group-open:rotate-180 text-mute shrink-0 ml-4">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </summary>
+          <div class="p-5 border-t border-hairline bg-canvas-soft font-sans text-xs sm:text-sm text-body leading-relaxed flex flex-col gap-3">
+            <p>
+              QuickCal is designed with a <strong>privacy-first approach</strong>:
+            </p>
+            <ul class="list-disc pl-5 flex flex-col gap-1">
+              <li><strong>OAuth 2.0 Security</strong>: We use Google Identity Services token clients. You authenticate directly with Google, and your credentials are never seen or stored on our servers.</li>
+              <li><strong>Short-lived access tokens</strong>: We only capture a temporary token to write the events to your primary calendar, which expires automatically.</li>
+              <li><strong>No database storage</strong>: We do not store your schedule data or personal calendars.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Call to action -->
+      <div class="text-center mt-8">
+        <a 
+          href="/" 
+          class="inline-flex h-10 px-6 text-xs font-semibold rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 items-center justify-center shadow-level-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+        >
+          Go Back to Uploader
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

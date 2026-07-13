@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 env_path = Path(__file__).resolve().parent.parent / '.env'
 load_dotenv(dotenv_path=env_path)
 
-from app.routes import extract, sync
+from app.routes import extract, sync, contact
 
 app = FastAPI(
     title="Schedule to Calendar Backend",
@@ -29,6 +29,7 @@ app.add_middleware(
 # Mount routes
 app.include_router(extract.router)
 app.include_router(sync.router)
+app.include_router(contact.router)
 
 @app.get("/health", tags=["System"])
 async def health_check():

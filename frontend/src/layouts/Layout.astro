@@ -16,38 +16,87 @@ const {
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content="QuickCal" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url.href} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://scheduletocalendar.com" />
+		<meta property="og:image" content={new URL('/apple-touch-icon.png', Astro.url).href} />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url.href} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={new URL('/apple-touch-icon.png', Astro.url).href} />
+
+		<!-- Google Identity Services (GIS) library for OAuth 2.0 Token Client -->
+		<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+		<!-- Theme Setup Inline Script to prevent FOUC -->
+		<meta name="color-scheme" content="light dark" />
+		<script is:inline>
+			{
+				const savedTheme = localStorage.getItem("theme");
+				if (savedTheme) {
+					document.documentElement.classList.add(savedTheme);
+					document.documentElement.setAttribute("data-theme", savedTheme);
+				} else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+					document.documentElement.classList.add("dark");
+					document.documentElement.setAttribute("data-theme", "dark");
+				} else {
+					document.documentElement.classList.add("light");
+					document.documentElement.setAttribute("data-theme", "light");
+				}
+			}
+		</script>
 	</head>
 	<body class="flex flex-col min-h-dvh h-auto">
 		<!-- Header / Navigation -->
 		<header class="sticky top-0 z-50 w-full h-16 shrink-0 border-b border-hairline bg-canvas/80 backdrop-blur-md">
 			<div class="mx-auto max-w-[1400px] h-full px-4 md:px-8 flex items-center justify-between">
 				<a href="/" class="flex items-center gap-2.5 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-4 rounded-xs">
-					<!-- Vercel logo style triangle icon + logo text -->
-					<svg class="w-5 h-5 md:w-[22px] md:h-[22px] text-ink fill-current" viewBox="0 0 512 512" aria-hidden="true">
-						<path d="M256,48L464,408H48Z" />
-					</svg>
+					<img src="/favicon.svg" alt="QuickCal logo" class="w-5 h-5 md:w-[22px] md:h-[22px] select-none" />
 					<span class="font-sans font-semibold text-sm md:text-[15px] tracking-[-0.3px] text-ink select-none">
-						Schedule to Calendar
+						QuickCal
 					</span>
 				</a>
 
 				<nav class="hidden md:flex items-center gap-6 lg:gap-8">
-					<a href="#" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">Features</a>
-					<a href="#" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">How it Works</a>
+					<a href="/faq" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">FAQ</a>
+					<a href="/about" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">About Us</a>
+					<a href="/contact" class="text-body hover:text-ink text-sm font-medium tracking-[-0.28px] py-1.5 px-3 rounded-full transition-all duration-200 hover:bg-canvas-soft-2">Contact Us</a>
 				</nav>
 
 				<div class="flex items-center gap-2.5 md:gap-4">
+					<!-- Theme Toggle Button -->
+					<button 
+						id="theme-toggle" 
+						aria-label="Toggle dark mode"
+						class="w-8 h-8 md:w-9 md:h-9 border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-ink flex items-center justify-center transition-all duration-200 active:bg-canvas-soft-2 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+					>
+						<!-- Sun icon (shown in dark mode) -->
+						<svg class="w-4.5 h-4.5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728A9 9 0 115.636 5.636m12.728 12.728A9 9 0 015.636 5.636" />
+						</svg>
+						<!-- Moon icon (shown in light mode) -->
+						<svg class="w-4.5 h-4.5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+						</svg>
+					</button>
+
 					<a href="https://github.com" target="_blank" rel="noopener noreferrer" class="h-8 md:h-9 px-3 md:px-4 text-xs md:text-sm font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-ink inline-flex items-center justify-center transition-all duration-200 active:bg-canvas-soft-2 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2">
 						GitHub
 					</a>
@@ -64,11 +113,9 @@ const {
 			<div class="mx-auto max-w-[1400px] px-4 md:px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
 				<div class="flex flex-col gap-1">
 					<div class="flex items-center gap-2">
-						<svg class="w-4 h-4 text-mute fill-current" viewBox="0 0 512 512" aria-hidden="true">
-							<path d="M256,48L464,408H48Z" />
-						</svg>
+						<img src="/favicon.svg" alt="QuickCal logo" class="w-4 h-4 select-none opacity-80" />
 						<span class="font-mono text-[12px] uppercase text-mute tracking-widest font-semibold">
-							Schedule to Calendar
+							QuickCal
 						</span>
 					</div>
 					<p class="text-mute text-xs">
@@ -77,11 +124,28 @@ const {
 				</div>
 
 				<div class="flex flex-wrap gap-x-6 gap-y-3">
-					<a href="#" class="text-mute hover:text-body text-xs transition-colors duration-200">Privacy Policy</a>
-					<a href="#" class="text-mute hover:text-body text-xs transition-colors duration-200">Terms of Service</a>
-					<a href="mailto:support@scheduletocalendar.com" class="text-mute hover:text-body text-xs transition-colors duration-200">Support</a>
+					<a href="/faq" class="text-mute hover:text-body text-xs transition-colors duration-200">FAQ</a>
+					<a href="/about" class="text-mute hover:text-body text-xs transition-colors duration-200">About Us</a>
+					<a href="/contact" class="text-mute hover:text-body text-xs transition-colors duration-200">Contact Us</a>
+					<a href="/privacy" class="text-mute hover:text-body text-xs transition-colors duration-200">Privacy Policy</a>
+					<a href="/terms" class="text-mute hover:text-body text-xs transition-colors duration-200">Terms & Conditions</a>
 				</div>
 			</div>
 		</footer>
+		<script>
+			const themeToggleBtn = document.getElementById("theme-toggle");
+			if (themeToggleBtn) {
+				themeToggleBtn.addEventListener("click", () => {
+					const isDark = document.documentElement.classList.contains("dark");
+					const nextTheme = isDark ? "light" : "dark";
+					const prevTheme = isDark ? "dark" : "light";
+					
+					document.documentElement.classList.remove(prevTheme);
+					document.documentElement.classList.add(nextTheme);
+					document.documentElement.setAttribute("data-theme", nextTheme);
+					localStorage.setItem("theme", nextTheme);
+				});
+			}
+		</script>
 	</body>
 </html>

@@ -1,0 +1,95 @@
+---
+// src/pages/terms.astro
+// Terms & Conditions MPA Route for QuickCal
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Terms & Conditions | QuickCal - User Agreement"
+  description="Read the QuickCal Terms & Conditions. Learn about the terms of service, user responsibilities, and calendar sync policies."
+>
+  <section class="relative overflow-hidden min-h-[calc(100dvh-64px+20px)] w-full bg-canvas flex flex-col items-center pt-12 pb-20 md:pt-16 md:pb-28 border-b border-hairline animate-fade-in">
+    <!-- Atmospheric Background -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-35 blur-[130px] flex items-center justify-center">
+      <div class="w-[350px] h-[350px] rounded-full bg-gradient-to-r from-gradient-develop-start to-gradient-develop-end transform -translate-x-1/2"></div>
+      <div class="w-[300px] h-[300px] rounded-full bg-gradient-to-r from-gradient-preview-start to-gradient-preview-end transform translate-x-1/2"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 text-left flex flex-col gap-8">
+      <!-- Heading Section -->
+      <div class="text-center flex flex-col gap-3">
+        <span class="font-mono text-[11px] text-mute uppercase tracking-widest font-bold font-semibold">User Agreement</span>
+        <h1 class="font-sans font-extrabold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-[-1.6px] text-ink">
+          Terms & Conditions
+        </h1>
+        <p class="font-sans text-body text-sm sm:text-base leading-relaxed text-balance max-w-xl mx-auto opacity-95">
+          By using QuickCal, you agree to comply with our user policies and disclaimers. Please review our service terms below.
+        </p>
+        <p class="font-mono text-[11px] text-mute">Last updated: July 13, 2026</p>
+      </div>
+
+      <!-- Content Card -->
+      <div class="bg-canvas border border-hairline rounded-md shadow-level-3 p-6 sm:p-8 flex flex-col gap-6 font-sans text-xs sm:text-sm text-body leading-relaxed">
+        <div>
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            1. Acceptance of Terms
+          </h2>
+          <p class="opacity-95">
+            By accessing and using QuickCal (referred to as "the Service", "we", "us", or "our"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use the Service.
+          </p>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            2. Description of Service
+          </h2>
+          <p class="opacity-95">
+            QuickCal is an online scheduling assistant utility. It processes image files (e.g. PNG, JPEG), PDF files, CSV files, and Excel spreadsheets using AI vision techniques to extract event details and export them directly into your Google Calendar. 
+          </p>
+          <p class="mt-2 opacity-95">
+            We provide the Service on an "as is" and "as available" basis. We reserve the right to modify, suspend, or discontinue any aspect of the Service at any time without prior notice.
+          </p>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            3. User Responsibilities
+          </h2>
+          <p class="opacity-95">
+            As a user of QuickCal, you agree that:
+          </p>
+          <ul class="list-disc pl-5 flex flex-col gap-2 mt-3 opacity-95">
+            <li>
+              You are responsible for reviewing and editing all parsed schedule items on the review table before clicking the "Confirm & Sync" button. We are not liable for scheduling conflicts, calendar clutter, or synchronization errors resulting from unreviewed calendar outputs.
+            </li>
+            <li>
+              You will not upload files containing malicious code, viruses, or illegal materials.
+            </li>
+            <li>
+              You have the legal right to upload and sync the schedules/timetables you submit.
+            </li>
+          </ul>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            4. Disclaimer of Warranties
+          </h2>
+          <p class="opacity-95">
+            YOU EXPLICITLY AGREE THAT USE OF THE SERVICE IS AT YOUR SOLE RISK. THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="text-center mt-4">
+        <a 
+          href="/" 
+          class="inline-flex h-10 px-6 text-xs font-semibold rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 items-center justify-center shadow-level-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+        >
+          Return to Uploader
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

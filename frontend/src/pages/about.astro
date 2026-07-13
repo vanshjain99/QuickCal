@@ -1,0 +1,95 @@
+---
+// src/pages/about.astro
+// About Us MPA Route for QuickCal
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="About Us | QuickCal - AI Schedule Integration"
+  description="Learn about QuickCal, our mission to automate schedule organization using advanced AI, and our commitment to a privacy-first, serverless user experience."
+>
+  <section class="relative overflow-hidden min-h-[calc(100dvh-64px+20px)] w-full bg-canvas flex flex-col items-center pt-12 pb-20 md:pt-16 md:pb-28 border-b border-hairline animate-fade-in">
+    <!-- Atmospheric Background -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-35 blur-[130px] flex items-center justify-center">
+      <div class="w-[350px] h-[350px] rounded-full bg-gradient-to-r from-gradient-develop-start to-gradient-develop-end transform -translate-x-1/3"></div>
+      <div class="w-[300px] h-[300px] rounded-full bg-gradient-to-r from-gradient-preview-start to-gradient-preview-end transform translate-x-1/3"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 text-left flex flex-col gap-8">
+      <!-- Heading Section -->
+      <div class="text-center flex flex-col gap-3">
+        <span class="font-mono text-[11px] text-mute uppercase tracking-widest font-bold font-semibold">Our Mission</span>
+        <h1 class="font-sans font-extrabold text-3xl sm:text-4xl md:text-5xl leading-tight tracking-[-1.6px] text-ink">
+          About QuickCal
+        </h1>
+        <p class="font-sans text-body text-sm sm:text-base leading-relaxed text-balance max-w-xl mx-auto opacity-95">
+          Eliminating the friction of digital calendar organization. We turn images, screenshots, and spreadsheets into structured calendar events using next-generation AI.
+        </p>
+      </div>
+
+      <!-- Content Card -->
+      <div class="bg-canvas border border-hairline rounded-md shadow-level-3 p-6 sm:p-8 flex flex-col gap-6 font-sans text-xs sm:text-sm text-body leading-relaxed">
+        <div>
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            QuickCal: The Smartest Timetable to Google Calendar Converter
+          </h2>
+          <p class="opacity-95">
+            Keeping track of class schedules, university timetables, and shifting work hours can be overwhelming. Manually entering every event is prone to errors and takes up valuable time. QuickCal solves this by acting as your automated scheduler, allowing you to <strong>extract schedule from image to google calendar</strong> instantly. Powered by state-of-the-art vision models, our utility helps you convert physical printouts, app screenshots, or spreadsheets into a structured calendar layout.
+          </p>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            How to Extract Schedule from Image to Google Calendar Instantly
+          </h2>
+          <p class="opacity-95">
+            Whether it is a university lecture grid, school timetable, or weekly office roster, QuickCal reads it. Through advanced multimodal AI integration, we can securely read your schedule layout. When you upload a screenshot or photo, our backend triggers the <strong>gemini add events from image to google calendar</strong> flow. The AI scans coordinates, days, and times, turning visual pixels into editable calendar rows. Once the system finishes extracting, you can verify, edit, and click sync to link the events directly to your Google account.
+          </p>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            Seamlessly Sync Excel, CSV, and PDF Schedules
+          </h2>
+          <p class="opacity-95">
+            QuickCal goes beyond simple image processing. Students and professionals often receive schedules in spreadsheet or document formats. That is why we built support to <strong>sync excel to google calendar</strong> and <strong>import pdf to google calendar</strong>. Instead of fighting with rigid CSV headers or manual file conversions, you can upload your <code>.xlsx</code> sheets or PDF timetables. The system automatically reads tables and syllabus structures, allowing you to <strong>convert pdf to google calendar</strong> or <strong>convert excel to google calendar</strong> with zero hassle.
+          </p>
+          <p class="mt-3 opacity-95">
+            For those asking <em>how to import excel to google calendar</em> or <em>how to import csv to google calendar</em>, QuickCal offers the perfect template-free alternative. Traditional methods force you to format columns like "Subject", "Start Date", and "Description" in a precise order. QuickCal's smart OCR bypasses templates entirely, dynamically aligning your spreadsheet data into valid Calendar API schemas.
+          </p>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            Automated Recurrence and Smart Adjustments
+          </h2>
+          <p class="opacity-95">
+            Class schedules and timetables aren't just one-off events—they repeat weekly. QuickCal understands this and automatically populates the recurrence rules. When it reads a class on "Monday at 09:00", it schedules weekly repeats in Google Calendar matching your semester duration. You can also customize repeating days directly inside our interactive review table before confirming the final sync.
+          </p>
+        </div>
+
+        <div class="border-t border-hairline pt-6">
+          <h2 class="font-sans font-bold text-base sm:text-lg text-ink tracking-[-0.4px] mb-2">
+            A Privacy-First, Secure Experience
+          </h2>
+          <p class="opacity-95">
+            We prioritize your data security. Your files are only processed to perform OCR extraction and are never stored. The Google integration is handled using the modern Google Identity Services OAuth 2.0 token client, meaning your Google password remains completely secure, and we only gain permission to create calendar events in your primary calendar.
+          </p>
+          <p class="mt-3 opacity-95">
+            Stop wasting time typing out course schedules. Drag in your class roster, Excel timetable, or PDF schedule today, and let QuickCal organize your life.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="text-center mt-4">
+        <a 
+          href="/" 
+          class="inline-flex h-10 px-6 text-xs font-semibold rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 items-center justify-center shadow-level-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+        >
+          Try QuickCal Now
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
