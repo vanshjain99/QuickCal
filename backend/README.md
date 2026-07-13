@@ -1,6 +1,6 @@
-# QuickCal Backend: FastAPI & Gemini AI Server
+# calendarimport.com Backend: FastAPI & Gemini AI Server
 
-This is the backend API service for **QuickCal**, built with FastAPI. It handles parsing and extracting timetable events from screenshots, images, PDFs, and spreadsheets using Google's Gemini LLMs, and coordinates direct synchronization of events to Google Calendar.
+This is the backend API service for **calendarimport.com**, built with FastAPI. It handles parsing and extracting timetable events from screenshots, images, PDFs, and spreadsheets using Google's Gemini LLMs, and coordinates direct synchronization of events to Google Calendar.
 
 ---
 

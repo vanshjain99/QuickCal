@@ -37,15 +37,15 @@ async def handle_contact_form(payload: ContactRequest):
     # 2. List-ID: header to classify as list/social discussion
     # 3. List-Unsubscribe: header
     # 4. Subject prefix mimicking a social notification
-    msg['From'] = f"QuickCal Social Hub <{smtp_user or 'noreply@quickcal.com'}>"
+    msg['From'] = f"calendarimport.com Social Hub <{smtp_user or 'noreply@calendarimport.com'}>"
     msg['To'] = receiver
-    msg['Subject'] = f"[QuickCal Social Network] Support Inquiry from {payload.name}"
+    msg['Subject'] = f"[calendarimport.com Social Network] Support Inquiry from {payload.name}"
     msg['Precedence'] = 'list'
-    msg['List-ID'] = '<social.quickcal.com>'
-    msg['List-Unsubscribe'] = '<mailto:unsubscribe@quickcal.com?subject=unsubscribe>'
+    msg['List-ID'] = '<social.calendarimport.com>'
+    msg['List-Unsubscribe'] = '<mailto:unsubscribe@calendarimport.com?subject=unsubscribe>'
 
     body_text = (
-        f"You received a new inquiry on QuickCal:\n\n"
+        f"You received a new inquiry on calendarimport.com:\n\n"
         f"Name: {payload.name}\n"
         f"Email: {payload.email}\n\n"
         f"Message:\n{payload.message}"
