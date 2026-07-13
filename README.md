@@ -1,6 +1,6 @@
 # QuickCal: Schedule to Calendar AI Utility
 
-QuickCal (available at [calendarimport.com](https://calendarimport.com)) is a modern, privacy-focused, and ultra-lean web utility that instantly converts weekly timetables, class schedules, or appointment sheets into recurring events in your Google Calendar. 
+QuickCal is a modern, privacy-focused, and ultra-lean web utility that instantly converts weekly timetables, class schedules, or appointment sheets into recurring events in your Google Calendar. 
 
 Simply upload a screenshot, image, PDF, or Excel spreadsheet of your schedule, verify the extracted details, and sync them directly to your Google Calendar.
 
