@@ -218,4 +218,4 @@ This builds your static distribution bundle inside `dist/` (which pre-minifies b
 
 ## 📄 License
 
-This project is licensed under the QuickCal Source-Available & Contribution License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
