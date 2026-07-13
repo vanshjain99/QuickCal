@@ -41,7 +41,7 @@ import UploadZone from '../components/UploadZone.astro';
         <div class="w-full text-center mb-2">
           <span class="font-mono text-[11px] text-mute uppercase tracking-widest font-bold">Step 2</span>
           <h2 class="font-sans font-semibold text-lg md:text-xl text-ink tracking-[-0.6px] mt-1">
-            Review parsed schedule
+            Review schedule
           </h2>
         </div>
 
@@ -65,6 +65,7 @@ import UploadZone from '../components/UploadZone.astro';
                   <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Day</th>
                   <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Time</th>
                   <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Location</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Weekly Repeat</th>
                 </tr>
               </thead>
               <tbody id="parsed-events-tbody" class="divide-y divide-hairline">
@@ -117,34 +118,190 @@ import UploadZone from '../components/UploadZone.astro';
   const toast = document.getElementById('toast-notification');
   const toastMessage = document.getElementById('toast-message');
 
+  let currentEvents: any[] = [];
+
+  // Re-usable table row renderer
+  function renderTable() {
+    if (!tbody) return;
+    tbody.innerHTML = '';
+
+    currentEvents.forEach((evt: any, index: number) => {
+      const row = document.createElement('tr');
+      row.className = 'group hover:bg-canvas-soft-2 transition-colors duration-150';
+      row.setAttribute('data-index', index.toString());
+
+      // Ensure weekly_days contains at least the day_of_week if not already there
+      if (!evt.weekly_days) {
+        evt.weekly_days = [evt.day_of_week];
+      }
+
+      // Days of the week for recurrence selection
+      const days = [
+        { key: 'MONDAY', label: 'M' },
+        { key: 'TUESDAY', label: 'T' },
+        { key: 'WEDNESDAY', label: 'W' },
+        { key: 'THURSDAY', label: 'T' },
+        { key: 'FRIDAY', label: 'F' },
+        { key: 'SATURDAY', label: 'S' },
+        { key: 'SUNDAY', label: 'S' }
+      ];
+
+      const daysHtml = days.map(d => {
+        const isActive = evt.weekly_days.includes(d.key);
+        const activeClasses = 'bg-primary text-on-primary font-semibold';
+        const inactiveClasses = 'bg-canvas border border-hairline text-mute hover:text-body hover:border-hairline-strong';
+        return `
+          <button 
+            type="button"
+            data-day="${d.key}"
+            data-index="${index}"
+            class="w-6 h-6 text-[10px] rounded-full flex items-center justify-center transition-all duration-150 select-none ${isActive ? activeClasses : inactiveClasses}"
+            title="Repeat on ${formatDay(d.key)}"
+          >
+            ${d.label}
+          </button>
+        `;
+      }).join('');
+
+      row.innerHTML = `
+        <td class="py-3 px-2">
+          <div 
+            contenteditable="true" 
+            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-sans text-[13px] font-semibold text-ink"
+            data-field="title"
+          >${evt.title}</div>
+        </td>
+        <td class="py-3 px-2">
+          <div 
+            contenteditable="true" 
+            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-sans text-[13px] text-body"
+            data-field="day_of_week"
+          >${formatDay(evt.day_of_week)}</div>
+        </td>
+        <td class="py-3 px-2">
+          <div 
+            contenteditable="true" 
+            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-mono text-[12px] text-body"
+            data-field="time"
+          >${evt.start_time}${evt.end_time ? ' - ' + evt.end_time : ''}</div>
+        </td>
+        <td class="py-3 px-2">
+          <div 
+            contenteditable="true" 
+            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-sans text-[13px] text-mute"
+            data-field="location"
+          >${evt.location || ''}</div>
+        </td>
+        <td class="py-3 px-2">
+          <div class="flex items-center gap-1">
+            ${daysHtml}
+          </div>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    // Update count badge
+    const badge = document.querySelector('.text-success.bg-link-bg-soft');
+    if (badge) {
+      badge.textContent = `${currentEvents.length} event${currentEvents.length === 1 ? '' : 's'} parsed`;
+    }
+  }
+
   // Listen to the custom event bubbled up from UploadZone
   document.addEventListener('timetableParsed', (event: Event) => {
     const customEvent = event as CustomEvent;
     const data = customEvent.detail;
     
     if (resultsWrapper && tbody && data?.events) {
-      // 1. Clear previous rows
-      tbody.innerHTML = '';
+      // 1. Copy parsed events into local state
+      currentEvents = JSON.parse(JSON.stringify(data.events));
 
-      // 2. Populate new rows
-      data.events.forEach((evt: any) => {
-        const row = document.createElement('tr');
-        row.className = 'group hover:bg-canvas-soft-2 transition-colors duration-150';
-        
-        row.innerHTML = `
-          <td class="py-3 px-2 font-sans text-[13px] font-semibold text-ink">${evt.title}</td>
-          <td class="py-3 px-2 font-sans text-[13px] text-body">${formatDay(evt.day_of_week)}</td>
-          <td class="py-3 px-2 font-mono text-[12px] text-body">${evt.start_time} - ${evt.end_time}</td>
-          <td class="py-3 px-2 font-sans text-[13px] text-mute">${evt.location || 'N/A'}</td>
-        `;
-        tbody.appendChild(row);
-      });
+      // 2. Render table
+      renderTable();
 
       // 3. Smooth show the results card
       resultsWrapper.classList.remove('hidden');
       resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
+
+  // Listen for edits in contenteditable cells
+  if (tbody) {
+    tbody.addEventListener('blur', (e) => {
+      const target = e.target as HTMLElement;
+      const field = target.getAttribute('data-field');
+      if (field) {
+        const row = target.closest('tr');
+        const rowIndex = parseInt(row?.getAttribute('data-index') || '0', 10);
+        const eventObj = currentEvents[rowIndex];
+        if (eventObj) {
+          const text = target.innerText.trim();
+          if (field === 'time') {
+            const parts = text.split('-').map(p => p.trim());
+            if (parts.length >= 2) {
+              eventObj.start_time = parts[0];
+              eventObj.end_time = parts[1];
+            } else {
+              eventObj.start_time = text;
+              eventObj.end_time = '';
+            }
+          } else if (field === 'day_of_week') {
+            const oldDay = eventObj.day_of_week;
+            const newDay = text.toUpperCase();
+            eventObj.day_of_week = newDay;
+            // Also update weekly_days if it was only matching the old day
+            if (eventObj.weekly_days && eventObj.weekly_days.length === 1 && eventObj.weekly_days[0] === oldDay) {
+              eventObj.weekly_days = [newDay];
+            }
+            renderTable();
+          } else {
+            eventObj[field] = text;
+          }
+          console.log(`Updated field [${field}] for event at index ${rowIndex}:`, eventObj);
+        }
+      }
+    }, true);
+
+    tbody.addEventListener('keydown', (e) => {
+      const target = e.target as HTMLElement;
+      const field = target.getAttribute('data-field');
+      if (field && e.key === 'Enter') {
+        e.preventDefault();
+        target.blur();
+      }
+    });
+
+    tbody.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const button = target.closest('button[data-day]');
+      if (button) {
+        e.preventDefault();
+        e.stopPropagation();
+        const day = button.getAttribute('data-day');
+        const rowIndex = parseInt(button.getAttribute('data-index') || '0', 10);
+        const eventObj = currentEvents[rowIndex];
+        
+        if (eventObj && day) {
+          if (!eventObj.weekly_days) {
+            eventObj.weekly_days = [];
+          }
+          
+          const dayIdx = eventObj.weekly_days.indexOf(day);
+          if (dayIdx > -1) {
+            eventObj.weekly_days.splice(dayIdx, 1);
+            button.classList.remove('bg-primary', 'text-on-primary', 'font-semibold');
+            button.classList.add('bg-canvas', 'border', 'border-hairline', 'text-mute');
+          } else {
+            eventObj.weekly_days.push(day);
+            button.classList.remove('bg-canvas', 'border', 'border-hairline', 'text-mute');
+            button.classList.add('bg-primary', 'text-on-primary', 'font-semibold');
+          }
+          console.log(`Toggled weekly day repeat:`, eventObj.weekly_days, eventObj);
+        }
+      }
+    });
+  }
 
   // Discard / Reupload handler
   if (discardBtn) {
@@ -161,8 +318,11 @@ import UploadZone from '../components/UploadZone.astro';
     syncBtn.addEventListener('click', () => {
       showToast('Syncing with Google Calendar…', false);
       
+      console.log('Syncing calendar events to Google Calendar:', JSON.stringify(currentEvents, null, 2));
+      
       setTimeout(() => {
-        showToast('Successfully synced 3 events to your Google Calendar!', true);
+        const count = currentEvents.length;
+        showToast(`Successfully synced ${count} event${count === 1 ? '' : 's'} to your Google Calendar!`, true);
       }, 1500);
     });
   }

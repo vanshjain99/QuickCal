@@ -39,7 +39,7 @@
     <input 
       type="file" 
       id="file-input" 
-      accept="image/png, image/jpeg, image/jpg, image/webp" 
+      accept="image/png, image/jpeg, image/jpg, application/pdf, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
       class="hidden" 
       tabindex="-1"
     />
@@ -59,7 +59,7 @@
           <span class="hidden md:inline">Drag & drop your timetable here, or <span class="text-link hover:underline">browse</span></span>
         </h3>
         <p class="font-mono text-[11px] text-mute uppercase tracking-wider">
-          PNG, JPG, WEBP &bull; Max 5MB
+          PNG, JPG, PDF, EXCEL &bull; Max 5MB
         </p>
       </div>
     </div>
@@ -101,26 +101,36 @@
         day_of_week: "MONDAY", 
         start_time: "09:00",
         end_time: "10:30",
-        location: "Room 302"
+        location: "Room 302",
+        weekly_days: ["MONDAY"]
       },
       {
         title: "CS 401: Machine Learning",
         day_of_week: "WEDNESDAY", 
         start_time: "09:00",
         end_time: "10:30",
-        location: "Room 302"
+        location: "Room 302",
+        weekly_days: ["WEDNESDAY"]
       },
       {
         title: "Data Structures Seminar",
         day_of_week: "THURSDAY", 
         start_time: "14:00",
         end_time: "16:00",
-        location: "Lab 1"
+        location: "Lab 1",
+        weekly_days: ["THURSDAY"]
       }
     ]
   };
 
-  const ALLOWED_MIME_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+  const ALLOWED_MIME_TYPES = [
+    'image/png', 
+    'image/jpeg', 
+    'image/jpg', 
+    'application/pdf', 
+    'application/vnd.ms-excel', 
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ];
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
   const dropzone = document.getElementById('dropzone-container');
@@ -196,9 +206,14 @@
   function validateAndProcessFile(file: File) {
     hideError();
 
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+    const allowedExtensions = ['png', 'jpg', 'jpeg', 'pdf', 'xls', 'xlsx'];
+    const isAllowedExtension = fileExtension && allowedExtensions.includes(fileExtension);
+    const isAllowedMime = ALLOWED_MIME_TYPES.includes(file.type);
+
     // 1. Validate File Type
-    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-      showError(`"${file.name}" has an invalid format. Please upload a PNG, JPG, or WEBP image.`);
+    if (!isAllowedMime && !isAllowedExtension) {
+      showError(`"${file.name}" has an invalid format. Please upload a PNG, JPG, PDF, or Excel file.`);
       return;
     }
 

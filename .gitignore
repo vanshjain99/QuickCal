@@ -1,0 +1,21 @@
+# Python caching and environments
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Sensitive environment configuration files
+.env
+backend/.env
+
+# Temporary / Generated test timetable files
+backend/sample_timetable.xlsx
+
+# OS files
+.DS_Store
+.DS_Store?
+Thumbs.db
