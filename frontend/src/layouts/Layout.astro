@@ -54,12 +54,11 @@ const {
 				if (savedTheme) {
 					document.documentElement.classList.add(savedTheme);
 					document.documentElement.setAttribute("data-theme", savedTheme);
-				} else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-					document.documentElement.classList.add("dark");
-					document.documentElement.setAttribute("data-theme", "dark");
 				} else {
-					document.documentElement.classList.add("light");
-					document.documentElement.setAttribute("data-theme", "light");
+					const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+					const defaultTheme = isDesktop ? "dark" : "light";
+					document.documentElement.classList.add(defaultTheme);
+					document.documentElement.setAttribute("data-theme", defaultTheme);
 				}
 			}
 		</script>
