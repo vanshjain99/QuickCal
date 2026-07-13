@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://scheduletocalendar.com',
+  site: 'https://quickcal.com',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
