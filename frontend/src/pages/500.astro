@@ -1,0 +1,50 @@
+---
+// src/pages/500.astro
+// Custom 500 Internal Error Route for QuickCal
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="500: Server Error | QuickCal"
+  description="An unexpected error occurred on our server. Please try again later or reach out to support."
+>
+  <section class="relative overflow-hidden min-h-[calc(100dvh-64px+20px)] w-full bg-canvas flex flex-col items-center justify-center py-20 border-b border-hairline animate-fade-in">
+    <!-- Atmospheric Background Glow -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-30 blur-[130px] flex items-center justify-center">
+      <div class="w-[320px] h-[320px] rounded-full bg-gradient-to-r from-color-error to-color-error-deep transform -translate-x-1/4"></div>
+      <div class="w-[280px] h-[280px] rounded-full bg-gradient-to-r from-gradient-preview-start to-gradient-preview-end transform translate-x-1/4"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-md mx-auto px-4 text-center flex flex-col items-center gap-6">
+      <!-- Error Code Display -->
+      <span class="font-mono text-xs text-mute uppercase tracking-widest font-bold font-semibold bg-canvas-soft border border-hairline px-3 py-1 rounded-full shadow-level-1">
+        Error Code 500
+      </span>
+
+      <div class="flex flex-col gap-2">
+        <h1 class="font-sans font-extrabold text-4xl sm:text-5xl leading-tight tracking-[-1.8px] text-ink">
+          Internal Error
+        </h1>
+        <p class="font-sans text-body text-sm leading-relaxed max-w-xs mx-auto opacity-95">
+          Something went wrong on our server. We are looking into it. Please try again shortly or contact us if the issue persists.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3 w-full max-w-xs mt-2">
+        <a 
+          href="/" 
+          class="flex-1 h-10 text-xs font-semibold rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center justify-center gap-1.5 shadow-level-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+        >
+          Try Again
+        </a>
+        <a 
+          href="/contact" 
+          class="flex-1 h-10 text-xs font-semibold rounded-sm border border-hairline hover:border-hairline-strong bg-canvas text-body hover:text-ink transition-all duration-200 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+        >
+          Contact Support
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

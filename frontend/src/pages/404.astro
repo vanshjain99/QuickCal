@@ -1,0 +1,45 @@
+---
+// src/pages/404.astro
+// Custom 404 Page Not Found Route for QuickCal
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="404: Page Not Found | QuickCal"
+  description="The page you are looking for does not exist or has been moved. Return to the QuickCal homepage to import your schedules."
+>
+  <section class="relative overflow-hidden min-h-[calc(100dvh-64px+20px)] w-full bg-canvas flex flex-col items-center justify-center py-20 border-b border-hairline animate-fade-in">
+    <!-- Atmospheric Background Glow -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-30 blur-[130px] flex items-center justify-center">
+      <div class="w-[320px] h-[320px] rounded-full bg-gradient-to-r from-gradient-ship-start to-gradient-ship-end transform -translate-x-1/4"></div>
+      <div class="w-[280px] h-[280px] rounded-full bg-gradient-to-r from-gradient-develop-start to-gradient-develop-end transform translate-x-1/4"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-md mx-auto px-4 text-center flex flex-col items-center gap-6">
+      <!-- Error Code Display -->
+      <span class="font-mono text-xs text-mute uppercase tracking-widest font-bold font-semibold bg-canvas-soft border border-hairline px-3 py-1 rounded-full shadow-level-1">
+        Error Code 404
+      </span>
+
+      <div class="flex flex-col gap-2">
+        <h1 class="font-sans font-extrabold text-4xl sm:text-5xl leading-tight tracking-[-1.8px] text-ink">
+          Lost in Space
+        </h1>
+        <p class="font-sans text-body text-sm leading-relaxed max-w-xs mx-auto opacity-95">
+          We couldn't find the page you are looking for. It might have been moved, deleted, or never existed in the first place.
+        </p>
+      </div>
+
+      <!-- Action Button -->
+      <a 
+        href="/" 
+        class="h-10 px-6 text-xs font-semibold rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 inline-flex items-center justify-center gap-1.5 shadow-level-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Return to Homepage
+      </a>
+    </div>
+  </section>
+</Layout>
