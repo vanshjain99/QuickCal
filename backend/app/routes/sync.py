@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from app.schemas import TimetableEvent
 from app.services.calendar import sync_events_to_calendar
 
-logger = logging.getLogger("schedule_to_calendar.sync")
+logger = logging.getLogger("quickcal.sync")
 
 router = APIRouter(prefix="/api/v1", tags=["Synchronization"])
 

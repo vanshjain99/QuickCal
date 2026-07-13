@@ -39,7 +39,7 @@ Simply upload a screenshot, image, PDF, or Excel spreadsheet of your schedule, v
 ## 📁 Repository Structure
 
 ```text
-schedule_to_calendar/
+QuickCal/
 ├── backend/                   # FastAPI backend application
 │   ├── app/
 │   │   ├── routes/

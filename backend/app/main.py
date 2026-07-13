@@ -36,6 +36,6 @@ async def health_check():
     """Simple operational health check to verify backend server vitality."""
     return {
         "status": "healthy",
-        "service": "schedule_to_calendar_backend",
+        "service": "quickcal_backend",
         "engine": "google-genai"
     }

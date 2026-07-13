@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 from app.schemas import TimetableEvent, DayOfWeek
 
 # Configure logger
-logger = logging.getLogger("schedule_to_calendar.calendar_service")
+logger = logging.getLogger("quickcal.calendar_service")
 
 # Map DayOfWeek enum to Google Calendar 2-letter RRULE codes
 DAY_TO_RRULE_CODE = {

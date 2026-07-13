@@ -10,7 +10,7 @@ import pandas as pd
 from app.schemas import ScheduleExtractionResponse
 
 # Configure logger
-logger = logging.getLogger("schedule_to_calendar.extract")
+logger = logging.getLogger("quickcal.extract")
 
 router = APIRouter(prefix="/api/v1", tags=["Extraction"])
 

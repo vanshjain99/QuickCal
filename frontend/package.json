@@ -1,5 +1,5 @@
 {
-  "name": "schedule_to_calendar",
+  "name": "quickcal",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && wrangler pages deploy ./dist --project-name schedule-to-calendar --branch main"
+    "deploy": "astro build && wrangler pages deploy ./dist --project-name quick-cal --branch main"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
