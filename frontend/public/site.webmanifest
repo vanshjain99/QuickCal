@@ -1,6 +1,6 @@
 {
-  "name": "calendarimport.com",
-  "short_name": "calendarimport.com",
+  "name": "QuickCal",
+  "short_name": "QuickCal",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

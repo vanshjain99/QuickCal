@@ -1,6 +1,6 @@
-# calendarimport.com Frontend: Astro & Tailwind CSS Web Client
+# QuickCal Frontend: Astro & Tailwind CSS Web Client
 
-This is the frontend client for **calendarimport.com**, built using Astro (v7.0) and styled with Tailwind CSS (v4). It provides a responsive, single-page application dashboard to upload schedule documents, inspect parsed events, and synchronize them with Google Calendar via the Google Identity Services OAuth 2.0 flow.
+This is the frontend client for **QuickCal**, built using Astro (v7.0) and styled with Tailwind CSS (v4). It provides a responsive, single-page application dashboard to upload schedule documents, inspect parsed events, and synchronize them with Google Calendar via the Google Identity Services OAuth 2.0 flow.
 
 ---
 
