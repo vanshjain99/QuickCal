@@ -196,6 +196,7 @@ import UploadZone from '../components/UploadZone.astro';
 </Layout>
 
 <script>
+  const API_URL = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
   const resultsWrapper = document.getElementById('parsed-results-wrapper');
   const uploadWrapper = document.getElementById('upload-zone-wrapper');
   const tbody = document.getElementById('parsed-events-tbody');
@@ -555,7 +556,7 @@ import UploadZone from '../components/UploadZone.astro';
 
       console.log('Sending sync payload to backend:', payload);
 
-      const response = await fetch('http://127.0.0.1:8000/api/v1/sync', {
+      const response = await fetch(`${API_URL}/api/v1/sync`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

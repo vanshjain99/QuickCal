@@ -93,7 +93,8 @@
 </div>
 
 <script>
-  // Active backend connection to http://127.0.0.1:8000/api/v1/extract
+  const API_URL = import.meta.env.PUBLIC_API_URL || 'http://127.0.0.1:8000';
+  // Active backend connection to /api/v1/extract
   const ALLOWED_MIME_TYPES = [
     'image/png', 
     'image/jpeg', 
@@ -203,7 +204,7 @@
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://127.0.0.1:8000/api/v1/extract', {
+      const response = await fetch(`${API_URL}/api/v1/extract`, {
         method: 'POST',
         body: formData,
       });
