@@ -74,7 +74,7 @@
       
       <div class="w-full flex flex-col gap-2 mt-1">
         <h3 class="font-sans font-semibold text-sm tracking-[-0.28px] text-ink animate-pulse">
-          Analyzing schedule…
+          Extracting Schedule...
         </h3>
         
         <!-- Vercel-like Skeleton Grid Loader -->
@@ -93,36 +93,7 @@
 </div>
 
 <script>
-  // Standard Vercel custom mock payload
-  const MOCK_RESPONSE = {
-    events: [
-      {
-        title: "CS 401: Machine Learning",
-        day_of_week: "MONDAY", 
-        start_time: "09:00",
-        end_time: "10:30",
-        location: "Room 302",
-        weekly_days: ["MONDAY"]
-      },
-      {
-        title: "CS 401: Machine Learning",
-        day_of_week: "WEDNESDAY", 
-        start_time: "09:00",
-        end_time: "10:30",
-        location: "Room 302",
-        weekly_days: ["WEDNESDAY"]
-      },
-      {
-        title: "Data Structures Seminar",
-        day_of_week: "THURSDAY", 
-        start_time: "14:00",
-        end_time: "16:00",
-        location: "Lab 1",
-        weekly_days: ["THURSDAY"]
-      }
-    ]
-  };
-
+  // Active backend connection to http://127.0.0.1:8000/api/v1/extract
   const ALLOWED_MIME_TYPES = [
     'image/png', 
     'image/jpeg', 
@@ -203,7 +174,7 @@
     });
   }
 
-  function validateAndProcessFile(file: File) {
+  async function validateAndProcessFile(file: File) {
     hideError();
 
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
@@ -227,11 +198,35 @@
     // 3. File is valid -> Transition to Loading State
     setLoadingState(true);
 
-    // 4. Simulate Backend Processing Handoff
-    setTimeout(() => {
+    // 4. Construct FormData and make Fetch API Call
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('http://127.0.0.1:8000/api/v1/extract', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        let errDetail = 'An error occurred while extracting the schedule.';
+        try {
+          const errData = await response.json();
+          if (errData && errData.detail) {
+            errDetail = typeof errData.detail === 'string' ? errData.detail : JSON.stringify(errData.detail);
+          }
+        } catch (_) {
+          errDetail = response.statusText || errDetail;
+        }
+        throw new Error(errDetail);
+      }
+
+      const data = await response.json();
+      console.log('Successfully received response from backend:', data);
+
       // Create and dispatch the custom DOM event with the parsed timetable JSON payload
       const customEvent = new CustomEvent('timetableParsed', {
-        detail: MOCK_RESPONSE,
+        detail: data,
         bubbles: true,
         composed: true
       });
@@ -239,16 +234,16 @@
       if (dropzone) {
         dropzone.dispatchEvent(customEvent);
       }
-      
-      // Log to console for debugging/handoff confirmation
-      console.log('Mock Timetable Processed successfully. Emitted Event payload:', MOCK_RESPONSE);
-
+    } catch (error: any) {
+      console.error('Error during schedule extraction:', error);
+      showError(error.message || 'Network error occurred. Please check if the backend is running.');
+    } finally {
       // Return state to idle (or let parent page redirect)
       setLoadingState(false);
       if (fileInput) {
         fileInput.value = ''; // Reset input so same file can be uploaded again
       }
-    }, 2000);
+    }
   }
 
   function showError(msg: string) {

@@ -32,7 +32,7 @@ import UploadZone from '../components/UploadZone.astro';
       </p>
 
       <!-- Drag-and-Drop Zone Component -->
-      <div class="w-full max-w-2xl mt-4">
+      <div id="upload-zone-wrapper" class="w-full max-w-2xl mt-4">
         <UploadZone />
       </div>
 
@@ -61,11 +61,12 @@ import UploadZone from '../components/UploadZone.astro';
             <table class="w-full border-collapse text-left">
               <thead>
                 <tr class="border-b border-hairline text-mute">
-                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Class / Event</th>
-                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Day</th>
-                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Time</th>
-                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Location</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold w-1/4">Class / Event</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold w-[120px]">Day</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold w-[150px]">Time</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold w-1/5">Location</th>
                   <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold">Weekly Repeat</th>
+                  <th class="font-mono text-[11px] uppercase tracking-wider py-3 px-2 font-semibold w-[60px] text-center">Delete</th>
                 </tr>
               </thead>
               <tbody id="parsed-events-tbody" class="divide-y divide-hairline">
@@ -75,22 +76,33 @@ import UploadZone from '../components/UploadZone.astro';
           </div>
 
           <!-- Bottom Action Buttons -->
-          <div class="flex items-center justify-end gap-3 pt-3 border-t border-hairline mt-2">
+          <div class="flex items-center justify-between pt-3 border-t border-hairline mt-2">
             <button 
-              id="btn-discard" 
-              class="h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              id="btn-add-row" 
+              class="h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
             >
-              Clear & Reupload
-            </button>
-            <button 
-              id="btn-sync" 
-              class="h-9 px-3 text-xs font-medium rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
-            >
-              <svg class="w-4 h-4 fill-current" viewBox="0 0 512 512" aria-hidden="true">
-                <path d="M256,48C141.31,48,48,141.31,48,256S141.31,464,256,464,464,370.69,464,256,370.69,48,256,48Zm96.25,222.51l-128,80A15.86,15.86,0,0,1,216,352a16,16,0,0,1-16-16V176a16,16,0,0,1,24.25-13.49l128,80a16,16,0,0,1,0,27Z" />
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
               </svg>
-              Sync to Google Calendar
+              Add New Row
             </button>
+            <div class="flex items-center gap-3">
+              <button 
+                id="btn-discard" 
+                class="h-9 px-3 text-xs font-medium border border-hairline hover:border-hairline-strong rounded-sm bg-canvas text-body hover:text-ink transition-all duration-200 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+              >
+                Clear & Reupload
+              </button>
+              <button 
+                id="btn-sync" 
+                class="h-9 px-3 text-xs font-medium rounded-sm bg-primary text-on-primary hover:bg-primary/95 transition-all duration-200 flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2 cursor-pointer"
+              >
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 512 512" aria-hidden="true">
+                  <path d="M256,48C141.31,48,48,141.31,48,256S141.31,464,256,464,464,370.69,464,256,370.69,48,256,48Zm96.25,222.51l-128,80A15.86,15.86,0,0,1,216,352a16,16,0,0,1-16-16V176a16,16,0,0,1,24.25-13.49l128,80a16,16,0,0,1,0,27Z" />
+                </svg>
+                Confirm & Sync with Google Calendar
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -112,8 +124,10 @@ import UploadZone from '../components/UploadZone.astro';
 
 <script>
   const resultsWrapper = document.getElementById('parsed-results-wrapper');
+  const uploadWrapper = document.getElementById('upload-zone-wrapper');
   const tbody = document.getElementById('parsed-events-tbody');
   const discardBtn = document.getElementById('btn-discard');
+  const addRowBtn = document.getElementById('btn-add-row');
   const syncBtn = document.getElementById('btn-sync');
   const toast = document.getElementById('toast-notification');
   const toastMessage = document.getElementById('toast-message');
@@ -155,7 +169,7 @@ import UploadZone from '../components/UploadZone.astro';
             type="button"
             data-day="${d.key}"
             data-index="${index}"
-            class="w-6 h-6 text-[10px] rounded-full flex items-center justify-center transition-all duration-150 select-none ${isActive ? activeClasses : inactiveClasses}"
+            class="w-6 h-6 text-[10px] rounded-full flex items-center justify-center transition-all duration-150 select-none cursor-pointer ${isActive ? activeClasses : inactiveClasses}"
             title="Repeat on ${formatDay(d.key)}"
           >
             ${d.label}
@@ -165,37 +179,75 @@ import UploadZone from '../components/UploadZone.astro';
 
       row.innerHTML = `
         <td class="py-3 px-2">
-          <div 
-            contenteditable="true" 
-            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-sans text-[13px] font-semibold text-ink"
+          <input 
+            type="text" 
+            value="${evt.title || ''}" 
+            class="w-full bg-canvas border border-hairline rounded-xs px-2 py-1 text-[13px] font-semibold text-ink focus:border-hairline-strong focus:outline-none focus:ring-1 focus:ring-primary/20"
             data-field="title"
-          >${evt.title}</div>
+            data-index="${index}"
+          />
         </td>
         <td class="py-3 px-2">
-          <div 
-            contenteditable="true" 
-            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-sans text-[13px] text-body"
+          <select 
+            class="w-full bg-canvas border border-hairline rounded-xs px-2 py-1 text-[13px] text-body focus:border-hairline-strong focus:outline-none focus:ring-1 focus:ring-primary/20"
             data-field="day_of_week"
-          >${formatDay(evt.day_of_week)}</div>
+            data-index="${index}"
+          >
+            ${['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'].map(day => `
+              <option value="${day}" ${evt.day_of_week === day ? 'selected' : ''}>
+                ${formatDay(day)}
+              </option>
+            `).join('')}
+          </select>
         </td>
         <td class="py-3 px-2">
-          <div 
-            contenteditable="true" 
-            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-mono text-[12px] text-body"
-            data-field="time"
-          >${evt.start_time}${evt.end_time ? ' - ' + evt.end_time : ''}</div>
+          <div class="flex items-center gap-1">
+            <input 
+              type="text" 
+              placeholder="09:00"
+              value="${evt.start_time || ''}" 
+              class="w-[58px] bg-canvas border border-hairline rounded-xs px-1.5 py-1 text-[12px] text-mono text-center focus:border-hairline-strong focus:outline-none focus:ring-1 focus:ring-primary/20"
+              data-field="start_time"
+              data-index="${index}"
+            />
+            <span class="text-mute text-xs">-</span>
+            <input 
+              type="text" 
+              placeholder="10:00"
+              value="${evt.end_time || ''}" 
+              class="w-[58px] bg-canvas border border-hairline rounded-xs px-1.5 py-1 text-[12px] text-mono text-center focus:border-hairline-strong focus:outline-none focus:ring-1 focus:ring-primary/20"
+              data-field="end_time"
+              data-index="${index}"
+            />
+          </div>
         </td>
         <td class="py-3 px-2">
-          <div 
-            contenteditable="true" 
-            class="outline-none focus:bg-canvas-soft-2 focus:ring-1 focus:ring-primary/20 px-1.5 py-1 rounded-sm transition-all border-b border-dashed border-hairline hover:border-hairline-strong cursor-text font-sans text-[13px] text-mute"
+          <input 
+            type="text" 
+            value="${evt.location || ''}" 
+            placeholder="Room/Building"
+            class="w-full bg-canvas border border-hairline rounded-xs px-2 py-1 text-[13px] text-mute focus:border-hairline-strong focus:outline-none focus:ring-1 focus:ring-primary/20"
             data-field="location"
-          >${evt.location || ''}</div>
+            data-index="${index}"
+          />
         </td>
         <td class="py-3 px-2">
           <div class="flex items-center gap-1">
             ${daysHtml}
           </div>
+        </td>
+        <td class="py-3 px-2 text-center">
+          <button 
+            type="button"
+            data-action="delete"
+            data-index="${index}"
+            class="p-1.5 text-error-deep hover:bg-error-soft/30 rounded-xs transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-error cursor-pointer"
+            title="Delete event"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </button>
         </td>
       `;
       tbody.appendChild(row);
@@ -213,92 +265,128 @@ import UploadZone from '../components/UploadZone.astro';
     const customEvent = event as CustomEvent;
     const data = customEvent.detail;
     
-    if (resultsWrapper && tbody && data?.events) {
+    if (data?.events) {
       // 1. Copy parsed events into local state
       currentEvents = JSON.parse(JSON.stringify(data.events));
 
       // 2. Render table
       renderTable();
 
-      // 3. Smooth show the results card
-      resultsWrapper.classList.remove('hidden');
-      resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // 3. Hide UploadZone, Show Results
+      if (uploadWrapper) {
+        uploadWrapper.classList.add('hidden');
+      }
+      if (resultsWrapper) {
+        resultsWrapper.classList.remove('hidden');
+        resultsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   });
 
-  // Listen for edits in contenteditable cells
+  // Listen for edits in input and select elements
   if (tbody) {
-    tbody.addEventListener('blur', (e) => {
-      const target = e.target as HTMLElement;
+    tbody.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement | HTMLSelectElement;
       const field = target.getAttribute('data-field');
-      if (field) {
-        const row = target.closest('tr');
-        const rowIndex = parseInt(row?.getAttribute('data-index') || '0', 10);
-        const eventObj = currentEvents[rowIndex];
+      const indexAttr = target.getAttribute('data-index');
+      
+      if (field && indexAttr) {
+        const index = parseInt(indexAttr, 10);
+        const eventObj = currentEvents[index];
         if (eventObj) {
-          const text = target.innerText.trim();
-          if (field === 'time') {
-            const parts = text.split('-').map(p => p.trim());
-            if (parts.length >= 2) {
-              eventObj.start_time = parts[0];
-              eventObj.end_time = parts[1];
-            } else {
-              eventObj.start_time = text;
-              eventObj.end_time = '';
-            }
-          } else if (field === 'day_of_week') {
-            const oldDay = eventObj.day_of_week;
-            const newDay = text.toUpperCase();
-            eventObj.day_of_week = newDay;
-            // Also update weekly_days if it was only matching the old day
-            if (eventObj.weekly_days && eventObj.weekly_days.length === 1 && eventObj.weekly_days[0] === oldDay) {
-              eventObj.weekly_days = [newDay];
-            }
-            renderTable();
-          } else {
-            eventObj[field] = text;
-          }
-          console.log(`Updated field [${field}] for event at index ${rowIndex}:`, eventObj);
+          eventObj[field] = target.value;
+          console.log(`Updated state index ${index} [${field}]:`, target.value);
         }
       }
-    }, true);
+    });
 
-    tbody.addEventListener('keydown', (e) => {
-      const target = e.target as HTMLElement;
+    tbody.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement | HTMLSelectElement;
       const field = target.getAttribute('data-field');
-      if (field && e.key === 'Enter') {
-        e.preventDefault();
-        target.blur();
+      const indexAttr = target.getAttribute('data-index');
+      
+      if (field && indexAttr) {
+        const index = parseInt(indexAttr, 10);
+        const eventObj = currentEvents[index];
+        if (eventObj) {
+          eventObj[field] = target.value;
+          console.log(`Committed state index ${index} [${field}]:`, target.value);
+          // Auto-align weekly_days if it was only matching the day_of_week
+          if (field === 'day_of_week') {
+            const oldDays = eventObj.weekly_days || [];
+            if (oldDays.length <= 1) {
+              eventObj.weekly_days = [target.value];
+              renderTable();
+            }
+          }
+        }
       }
     });
 
     tbody.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-      const button = target.closest('button[data-day]');
-      if (button) {
+      
+      // Delete Row
+      const deleteButton = target.closest('button[data-action="delete"]');
+      if (deleteButton) {
         e.preventDefault();
         e.stopPropagation();
-        const day = button.getAttribute('data-day');
-        const rowIndex = parseInt(button.getAttribute('data-index') || '0', 10);
-        const eventObj = currentEvents[rowIndex];
-        
-        if (eventObj && day) {
-          if (!eventObj.weekly_days) {
-            eventObj.weekly_days = [];
-          }
-          
-          const dayIdx = eventObj.weekly_days.indexOf(day);
-          if (dayIdx > -1) {
-            eventObj.weekly_days.splice(dayIdx, 1);
-            button.classList.remove('bg-primary', 'text-on-primary', 'font-semibold');
-            button.classList.add('bg-canvas', 'border', 'border-hairline', 'text-mute');
-          } else {
-            eventObj.weekly_days.push(day);
-            button.classList.remove('bg-canvas', 'border', 'border-hairline', 'text-mute');
-            button.classList.add('bg-primary', 'text-on-primary', 'font-semibold');
-          }
-          console.log(`Toggled weekly day repeat:`, eventObj.weekly_days, eventObj);
+        const indexAttr = deleteButton.getAttribute('data-index');
+        if (indexAttr) {
+          const index = parseInt(indexAttr, 10);
+          currentEvents.splice(index, 1);
+          renderTable();
+          console.log(`Deleted event at index ${index}. Remaining:`, currentEvents);
         }
+        return;
+      }
+
+      // Toggle Recurrence Day
+      const dayButton = target.closest('button[data-day]');
+      if (dayButton) {
+        e.preventDefault();
+        e.stopPropagation();
+        const day = dayButton.getAttribute('data-day');
+        const indexAttr = dayButton.getAttribute('data-index');
+        if (day && indexAttr) {
+          const index = parseInt(indexAttr, 10);
+          const eventObj = currentEvents[index];
+          if (eventObj) {
+            if (!eventObj.weekly_days) {
+              eventObj.weekly_days = [];
+            }
+            
+            const dayIdx = eventObj.weekly_days.indexOf(day);
+            if (dayIdx > -1) {
+              eventObj.weekly_days.splice(dayIdx, 1);
+            } else {
+              eventObj.weekly_days.push(day);
+            }
+            renderTable();
+            console.log(`Toggled weekly day repeat for index ${index}:`, eventObj.weekly_days);
+          }
+        }
+      }
+    });
+  }
+
+  // Add New Row handler
+  if (addRowBtn) {
+    addRowBtn.addEventListener('click', () => {
+      const newEvent = {
+        title: "New Class",
+        day_of_week: "MONDAY",
+        start_time: "09:00",
+        end_time: "10:00",
+        location: "",
+        weekly_days: ["MONDAY"]
+      };
+      currentEvents.push(newEvent);
+      renderTable();
+      console.log('Added new event row:', newEvent);
+      
+      if (tbody && tbody.lastElementChild) {
+        tbody.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
   }
@@ -306,10 +394,14 @@ import UploadZone from '../components/UploadZone.astro';
   // Discard / Reupload handler
   if (discardBtn) {
     discardBtn.addEventListener('click', () => {
+      currentEvents = [];
       if (resultsWrapper) {
         resultsWrapper.classList.add('hidden');
-        window.scrollTo({ top: document.getElementById('uploader')?.offsetTop || 0, behavior: 'smooth' });
       }
+      if (uploadWrapper) {
+        uploadWrapper.classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -336,7 +428,6 @@ import UploadZone from '../components/UploadZone.astro';
     if (toast && toastMessage) {
       toastMessage.textContent = message;
       
-      // Dynamic color/style adjustments if needed
       if (isSuccess) {
         toast.classList.remove('bg-primary/95');
         toast.classList.add('bg-primary');
@@ -344,11 +435,9 @@ import UploadZone from '../components/UploadZone.astro';
         toast.classList.add('bg-primary/95');
       }
 
-      // Display toast
       toast.classList.remove('translate-y-24', 'opacity-0');
       toast.classList.add('translate-y-0', 'opacity-100');
 
-      // If it is success state, fade it out after 4 seconds
       if (isSuccess) {
         setTimeout(() => {
           toast.classList.remove('translate-y-0', 'opacity-100');
