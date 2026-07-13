@@ -193,6 +193,44 @@ import UploadZone from '../components/UploadZone.astro';
     </svg>
     <span id="toast-message" class="text-xs font-sans font-medium">Calendar sync completed successfully!</span>
   </div>
+
+  <!-- Full Screen Glassmorphism Loading Overlay -->
+  <div 
+    id="full-screen-loader" 
+    class="fixed inset-0 z-[150] hidden items-center justify-center bg-canvas-soft/40 backdrop-blur-xl opacity-0 transition-opacity duration-300 pointer-events-auto select-none"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="loader-title"
+  >
+    <div 
+      id="loader-card" 
+      class="relative flex flex-col items-center gap-6 p-8 rounded-lg bg-canvas/80 backdrop-blur-md border border-hairline shadow-level-5 max-w-sm w-full text-center scale-95 opacity-0 transition-all duration-300"
+    >
+      <!-- Premium Multi-ring Spinner -->
+      <div class="relative w-16 h-16 flex items-center justify-center">
+        <!-- Outer Ring -->
+        <div class="absolute w-full h-full rounded-full border-4 border-hairline-strong/20"></div>
+        <div class="absolute w-full h-full rounded-full border-4 border-t-link border-r-transparent border-b-transparent border-l-transparent animate-spin"></div>
+        
+        <!-- Inner Counter-rotating Ring -->
+        <div class="absolute w-10 h-10 rounded-full border-4 border-hairline-strong/10"></div>
+        <div class="absolute w-10 h-10 rounded-full border-4 border-b-violet border-t-transparent border-r-transparent border-l-transparent animate-spin [animation-direction:reverse] [animation-duration:1.5s]"></div>
+        
+        <!-- Pulsing Core Dot -->
+        <div class="w-3.5 h-3.5 rounded-full bg-cyan animate-pulse"></div>
+      </div>
+      
+      <div class="flex flex-col gap-2 mt-2">
+        <h3 id="loader-title" class="font-sans font-bold text-[18px] text-ink tracking-tight">
+          Extracting schedule...
+        </h3>
+        <p class="font-mono text-[11px] text-body tracking-wider uppercase bg-canvas-soft-2 px-3 py-1 rounded-pill border border-hairline flex items-center justify-center gap-1.5 font-semibold">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-error-deep animate-ping"></span>
+          Do not close the tab ..
+        </p>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <script>
@@ -205,6 +243,50 @@ import UploadZone from '../components/UploadZone.astro';
   const syncBtns = document.querySelectorAll('.btn-sync');
   const toast = document.getElementById('toast-notification');
   const toastMessage = document.getElementById('toast-message');
+
+  const fullScreenLoader = document.getElementById('full-screen-loader');
+  const loaderCard = document.getElementById('loader-card');
+  const loaderTitle = document.getElementById('loader-title');
+
+  function beforeUnloadHandler(e: BeforeUnloadEvent) {
+    e.preventDefault();
+    e.returnValue = 'Do not close the tab while processing.';
+    return e.returnValue;
+  }
+
+  function showLoader(title: string) {
+    if (fullScreenLoader && loaderCard && loaderTitle) {
+      loaderTitle.textContent = title;
+      fullScreenLoader.classList.remove('hidden');
+      fullScreenLoader.classList.add('flex');
+      
+      // Trigger transitions
+      setTimeout(() => {
+        fullScreenLoader.classList.remove('opacity-0');
+        fullScreenLoader.classList.add('opacity-100');
+        loaderCard.classList.remove('scale-95', 'opacity-0');
+        loaderCard.classList.add('scale-100', 'opacity-100');
+      }, 10);
+
+      window.addEventListener('beforeunload', beforeUnloadHandler);
+    }
+  }
+
+  function hideLoader() {
+    if (fullScreenLoader && loaderCard) {
+      fullScreenLoader.classList.remove('opacity-100');
+      fullScreenLoader.classList.add('opacity-0');
+      loaderCard.classList.remove('scale-100', 'opacity-100');
+      loaderCard.classList.add('scale-95', 'opacity-0');
+      
+      window.removeEventListener('beforeunload', beforeUnloadHandler);
+      
+      setTimeout(() => {
+        fullScreenLoader.classList.remove('flex');
+        fullScreenLoader.classList.add('hidden');
+      }, 300);
+    }
+  }
 
   let currentEvents: any[] = [];
 
@@ -334,8 +416,19 @@ import UploadZone from '../components/UploadZone.astro';
     }
   }
 
+  // Listen to the start event from UploadZone
+  document.addEventListener('timetableParseStart', () => {
+    showLoader("Extracting schedule...");
+  });
+
+  // Listen to the failure/end event from UploadZone
+  document.addEventListener('timetableParseEnd', () => {
+    hideLoader();
+  });
+
   // Listen to the custom event bubbled up from UploadZone
   document.addEventListener('timetableParsed', (event: Event) => {
+    hideLoader();
     const customEvent = event as CustomEvent;
     const data = customEvent.detail;
     
@@ -533,6 +626,8 @@ import UploadZone from '../components/UploadZone.astro';
       btn.textContent = 'Syncing schedule...';
     });
 
+    showLoader("Syncing schedule...");
+
     try {
       // Clean and sanitize the event payload to strictly match Pydantic schema
       const sanitizedEvents = currentEvents.map(evt => ({
@@ -580,11 +675,16 @@ import UploadZone from '../components/UploadZone.astro';
       const resData = await response.json();
       console.log('Sync response:', resData);
 
+      // Hide the full screen loader on success
+      hideLoader();
+
       // Show success screen
       showSuccessScreen(resData.synced_count || sanitizedEvents.length);
 
     } catch (err: any) {
       console.error('Sync failure:', err);
+      // Hide the full screen loader on failure
+      hideLoader();
       showToast(err.message || 'Sync failed due to a network error.', false);
       resetSyncButton();
     }

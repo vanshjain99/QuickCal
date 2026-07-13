@@ -198,6 +198,12 @@
 
     // 3. File is valid -> Transition to Loading State
     setLoadingState(true);
+    if (dropzone) {
+      dropzone.dispatchEvent(new CustomEvent('timetableParseStart', {
+        bubbles: true,
+        composed: true
+      }));
+    }
 
     // 4. Construct FormData and make Fetch API Call
     try {
@@ -238,6 +244,14 @@
     } catch (error: any) {
       console.error('Error during schedule extraction:', error);
       showError(error.message || 'Network error occurred. Please check if the backend is running.');
+      
+      // Dispatch failure end event
+      if (dropzone) {
+        dropzone.dispatchEvent(new CustomEvent('timetableParseEnd', {
+          bubbles: true,
+          composed: true
+        }));
+      }
     } finally {
       // Return state to idle (or let parent page redirect)
       setLoadingState(false);
