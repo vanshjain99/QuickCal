@@ -7,8 +7,14 @@ Simply upload a screenshot, image, PDF, or Excel spreadsheet of your schedule, v
 ---
 ## 🎬 Demo Video
 
-<video controls playsinline preload="metadata" width="100%">
-  <source src="https://YOUR_PUBLIC_MP4_URL/demo.mp4" type="video/mp4" />
+
+
+<!-- .mp4 file uploaded below -->
+https://github.com/user-attachments/assets/06412a75-27e0-43a1-8356-111cc84c07e6
+
+
+<video width="600" controls>
+  <source src="https://github.com/user-attachments/assets/06412a75-27e0-43a1-8356-111cc84c07e6" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
