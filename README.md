@@ -10,11 +10,11 @@ Simply upload a screenshot, image, PDF, or Excel spreadsheet of your schedule, v
 
 
 <!-- .mp4 file uploaded below -->
-https://github.com/user-attachments/assets/06412a75-27e0-43a1-8356-111cc84c07e6
+https://github.com/user-attachments/assets/1cde0a37-33e8-4ed2-8c97-ddcced1b2931
 
 
-<video width="600" controls>
-  <source src="https://github.com/user-attachments/assets/06412a75-27e0-43a1-8356-111cc84c07e6" type="video/mp4">
+<video width="600" controls controlsList="nodownload noplaybackrate" disablePictureInPicture loop>
+  <source src="https://github.com/user-attachments/assets/1cde0a37-33e8-4ed2-8c97-ddcced1b2931" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
