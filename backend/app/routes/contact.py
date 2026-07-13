@@ -17,7 +17,13 @@ class ContactRequest(BaseModel):
 @router.post("/contact")
 async def handle_contact_form(payload: ContactRequest):
     # Retrieve the receiver email from .env
-    receiver = os.getenv("CONTACT_RECEIVER_EMAIL", "vanshjain1712@gmail.com")
+    receiver = os.getenv("CONTACT_RECEIVER_EMAIL")
+    if not receiver:
+        logger.error("CONTACT_RECEIVER_EMAIL environment variable is not configured.")
+        raise HTTPException(
+            status_code=500,
+            detail="Contact submission service is not configured on the server."
+        )
     smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
     smtp_port = int(os.getenv("SMTP_PORT", "587"))
     smtp_user = os.getenv("SMTP_USERNAME")
