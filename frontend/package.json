@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && wrangler pages deploy ./dist --project-name quick-cal --branch main"
+    "deploy": "astro build && wrangler pages deploy ./dist --project-name quickcal --branch main"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
