@@ -151,4 +151,4 @@ This generates a fully optimized static directory in `frontend/dist/`, which con
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the QuickCal Source-Available & Contribution License - see the [LICENSE](LICENSE) file for details.
