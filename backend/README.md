@@ -19,7 +19,6 @@ This is the backend API service for **QuickCal**, built with FastAPI. It handles
 backend/
 ├── app/
 │   ├── routes/
-│   │   ├── contact.py         # Handles support requests and feedback
 │   │   ├── extract.py         # Receives documents, calls Gemini API, returns parsed events
 │   │   └── sync.py            # Interfaces with Google Calendar API using client-provided token
 │   ├── schemas/
@@ -78,5 +77,4 @@ backend/
 
 - **`POST /api/v1/extract`**: Accepts a multipart form file upload (`png`, `jpg`, `jpeg`, `pdf`, `xls`, `xlsx`) and returns structured JSON with extracted events.
 - **`POST /api/v1/sync`**: Syncs the array of events to Google Calendar. Requires a valid Google OAuth access token and timezone identifier.
-- **`POST /api/v1/contact`**: Simple messaging/contact endpoint.
 - **`GET /health`**: Operational vitality and health check endpoint.

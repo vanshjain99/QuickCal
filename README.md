@@ -27,7 +27,7 @@ https://github.com/user-attachments/assets/1cde0a37-33e8-4ed2-8c97-ddcced1b2931
 - **Adaptive Theme Engine**: Built-in theme toggle with `localStorage` caching to eliminate flashing. The site defaults to **Dark Mode on desktop screens** (>=768px) and **Light Mode on mobile screens** to align with platform design aesthetics.
 - **Interactive Review Workspace**: A sleek responsive workspace that allows you to inspect, modify, add, or delete extracted schedule events (times, days, titles, locations, and recurrence list) in real-time before syncing.
 - **One-Click Google Calendar Sync**: Integrates with the **Google Calendar API** client-side (using Google Identity Services OAuth 2.0 flow) to automatically schedule recurring weekly events on your primary calendar.
-- **Support Contact Pipeline**: Integrated contact form submitting queries to a backend SMTP client (with automatic console logging fallback when credentials are not configured).
+- **Support Contact Pipeline**: Integrated contact form submitting queries directly to a FormSubmit AJAX endpoint from the client's browser (requiring no backend email setup or credentials).
 - **SEO & Discoverability**: Automatic compilation of dynamic XML sitemaps (`sitemap-index.xml`, `sitemap-0.xml`) and dynamic `robots.txt` configuration for search engine crawlers.
 - **Privacy First**: Processed through secure ephemeral pipelines. We do not store your uploaded documents, schedule data, or Google OAuth credentials.
 
@@ -57,7 +57,6 @@ QuickCal/
 ├── backend/                   # FastAPI backend application
 │   ├── app/
 │   │   ├── routes/
-│   │   │   ├── contact.py     # Handles support form SMTP forwarding & console logs
 │   │   │   ├── extract.py     # Gemini OCR extraction endpoint for documents/spreadsheets
 │   │   │   └── sync.py        # Receives events and pushes them to Google Calendar API
 │   │   ├── schemas.py         # Pydantic validation models (TimetableEvent, DayOfWeek)
@@ -108,16 +107,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 # Server Binding
 HOST=127.0.0.1
 PORT=8000
-
-# Support Inquiry Forwarding
-CONTACT_RECEIVER_EMAIL=your_admin_email@example.com
-
-# SMTP Server Configurations (Optional; falls back to console logging if omitted)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USERNAME=your_smtp_sender_email@gmail.com
-SMTP_PASSWORD=your_smtp_app_password_here
-```
+```,StartLine:102,TargetContent:
 
 ### Frontend `.env` (`frontend/.env`)
 ```env
