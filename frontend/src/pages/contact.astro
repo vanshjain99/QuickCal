@@ -122,17 +122,18 @@ import Layout from '../layouts/Layout.astro';
       }
 
       try {
-        const response = await fetch('https://formsubmit.co/ajax/dev0145build@gmail.com', {
+        const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
           body: JSON.stringify({
+            access_key: 'YOUR_WEB3FORMS_ACCESS_KEY', // <-- Replace with your Web3Forms access key
             name,
             email,
             message,
-            _subject: `QuickCal Support Inquiry from ${name}`
+            subject: `QuickCal Support Inquiry from ${name}`
           }),
         });
 
