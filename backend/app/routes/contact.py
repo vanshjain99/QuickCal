@@ -32,17 +32,12 @@ async def handle_contact_form(payload: ContactRequest):
     # Set up email structures
     msg = MIMEMultipart()
     
-    # Gmail Social Tab Classification Triggers:
-    # 1. Precedence: list or Precedence: bulk
-    # 2. List-ID: header to classify as list/social discussion
-    # 3. List-Unsubscribe: header
-    # 4. Subject prefix mimicking a social notification
-    msg['From'] = f"QuickCal Social Hub <{smtp_user or 'noreply@calendarimport.com'}>"
+    # Standard transactional email headers to ensure delivery to Primary inbox
+    sender_name = f"QuickCal Support ({payload.name})"
+    msg['From'] = f"{sender_name} <{smtp_user}>" if smtp_user else f"{sender_name} <noreply@calendarimport.com>"
     msg['To'] = receiver
-    msg['Subject'] = f"[QuickCal Social Network] Support Inquiry from {payload.name}"
-    msg['Precedence'] = 'list'
-    msg['List-ID'] = '<social.calendarimport.com>'
-    msg['List-Unsubscribe'] = '<mailto:unsubscribe@calendarimport.com?subject=unsubscribe>'
+    msg['Reply-To'] = payload.email
+    msg['Subject'] = f"QuickCal Support Inquiry: {payload.name}"
 
     body_text = (
         f"You received a new inquiry on QuickCal:\n\n"
