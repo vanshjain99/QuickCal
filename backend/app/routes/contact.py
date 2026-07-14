@@ -61,9 +61,9 @@ async def handle_contact_form(payload: ContactRequest):
 
     try:
         if smtp_port == 465:
-            server = smtplib.SMTP_SSL(smtp_host, smtp_port)
+            server = smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10.0)
         else:
-            server = smtplib.SMTP(smtp_host, smtp_port)
+            server = smtplib.SMTP(smtp_host, smtp_port, timeout=10.0)
             server.starttls()
         
         server.login(smtp_user, smtp_pass)
