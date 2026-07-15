@@ -46,6 +46,16 @@ const {
 		<!-- Google Identity Services (GIS) library for OAuth 2.0 Token Client -->
 		<script src="https://accounts.google.com/gsi/client" async defer></script>
 
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-RV2KZYTGFS" is:inline></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-RV2KZYTGFS');
+		</script>
+
 		<!-- Theme Setup Inline Script to prevent FOUC -->
 		<meta name="color-scheme" content="light dark" />
 		<script is:inline>
