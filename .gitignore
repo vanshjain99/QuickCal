@@ -19,3 +19,7 @@ backend/sample_timetable.xlsx
 .DS_Store
 .DS_Store?
 Thumbs.db
+
+# AI Agent custom configuration directory
+.agents/
+
