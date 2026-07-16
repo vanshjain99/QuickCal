@@ -7,14 +7,24 @@ Simply upload a screenshot, image, PDF, or Excel spreadsheet of your schedule, v
 ---
 ## 🎬 Demo Video
 
-
-
 <!-- .mp4 file uploaded below -->
 https://github.com/user-attachments/assets/1cde0a37-33e8-4ed2-8c97-ddcced1b2931
 
 
 <video width="600" controls controlsList="nodownload noplaybackrate" disablePictureInPicture loop>
   <source src="https://github.com/user-attachments/assets/1cde0a37-33e8-4ed2-8c97-ddcced1b2931" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+# How to delete all the events at once so you can add new timetable
+
+<!-- .mp4 file uploaded below -->
+https://github.com/user-attachments/assets/b5d898f6-a75b-4ef4-bf5c-6cea5a22040f
+
+
+
+<video width="600" controls controlsList="nodownload noplaybackrate" disablePictureInPicture loop>
+  <source src="https://github.com/user-attachments/assets/b5d898f6-a75b-4ef4-bf5c-6cea5a22040f" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
