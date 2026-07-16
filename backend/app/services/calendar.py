@@ -44,15 +44,15 @@ def get_next_occurrence_date(day: DayOfWeek) -> datetime.date:
         
     return today + datetime.timedelta(days=days_ahead)
 
-def sync_events_to_calendar(access_token: str, events: List[TimetableEvent], timezone: str) -> int:
+def sync_events_to_calendar(access_token: str, events: List[TimetableEvent], timezone: str, calendar_name: str) -> int:
     """
     Authenticates with Google Calendar API using the provided OAuth2 access token,
-    iterates through list of TimetableEvent models, constructs calendar entries with
-    weekly recurrence rules, and inserts them into the primary calendar.
+    creates a dedicated secondary calendar with the specified name, and
+    inserts the list of TimetableEvent models with weekly recurrence rules and color-coding.
     
     Returns the count of successfully created events.
     """
-    logger.info(f"Starting calendar sync for {len(events)} events with timezone '{timezone}'.")
+    logger.info(f"Starting calendar sync for {len(events)} events with timezone '{timezone}' and calendar name '{calendar_name}'.")
     
     # 1. Instantiate OAuth2 Credentials with the access token
     creds = Credentials(token=access_token)
@@ -60,6 +60,20 @@ def sync_events_to_calendar(access_token: str, events: List[TimetableEvent], tim
     # 2. Build the Google Calendar API Service client
     service = build('calendar', 'v3', credentials=creds)
     
+    # 3. Create a secondary calendar with the custom name
+    try:
+        logger.info(f"Creating secondary calendar: '{calendar_name}'")
+        calendar_meta = {
+            'summary': calendar_name,
+            'timeZone': timezone
+        }
+        created_calendar = service.calendars().insert(body=calendar_meta).execute()
+        calendar_id = created_calendar['id']
+        logger.info(f"Successfully created secondary calendar with ID: {calendar_id}")
+    except Exception as e:
+        logger.error(f"Failed to create secondary calendar: {str(e)}", exc_info=True)
+        raise e
+        
     success_count = 0
     
     for event in events:
@@ -88,6 +102,9 @@ def sync_events_to_calendar(access_token: str, events: List[TimetableEvent], tim
             byday_str = ",".join(rrule_days)
             recurrence_rule = f"RRULE:FREQ=WEEKLY;BYDAY={byday_str}"
             
+            # Get event color_id (use event's color_id if valid, fallback to Graphite '8')
+            color_id = event.color_id if event.color_id and event.color_id.isdigit() else "8"
+            
             # Construct Google Calendar Event Resource JSON
             gcal_event: Dict[str, Any] = {
                 'summary': event.title,
@@ -104,22 +121,20 @@ def sync_events_to_calendar(access_token: str, events: List[TimetableEvent], tim
                 'recurrence': [
                     recurrence_rule
                 ],
+                'colorId': color_id,
                 'reminders': {
                     'useDefault': True,
                 }
             }
             
-            # Insert the event into user's primary calendar
-            logger.info(f"Inserting event: '{event.title}' on {event.day_of_week} ({event.start_time} - {event.end_time}) repeating on {byday_str}")
-            service.events().insert(calendarId='primary', body=gcal_event).execute()
+            # Insert the event into user's secondary calendar
+            logger.info(f"Inserting event: '{event.title}' on {event.day_of_week} ({event.start_time} - {event.end_time}) repeating on {byday_str} in calendar {calendar_id}")
+            service.events().insert(calendarId=calendar_id, body=gcal_event).execute()
             
             success_count += 1
             
         except Exception as e:
             logger.error(f"Failed to sync event '{event.title}': {str(e)}", exc_info=True)
-            # Raise exception if we want to fail the whole sync, or log and continue.
-            # Usually, it is better to continue syncing other events and report failure later
-            # or raise so the user knows. Let's raise to let the API endpoint handle it.
             raise e
             
     return success_count

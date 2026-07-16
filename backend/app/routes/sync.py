@@ -25,6 +25,10 @@ class CalendarSyncRequest(BaseModel):
         "Asia/Kolkata",
         description="Standard IANA timezone string for the synced calendar events (e.g. 'Asia/Kolkata', 'America/New_York')."
     )
+    calendar_name: Optional[str] = Field(
+        "My University Schedule",
+        description="The name of the secondary calendar to be created."
+    )
 
 @router.post("/sync")
 async def sync_timetable(request: CalendarSyncRequest):
@@ -35,7 +39,8 @@ async def sync_timetable(request: CalendarSyncRequest):
         synced_count = sync_events_to_calendar(
             access_token=request.access_token,
             events=request.events,
-            timezone=request.timezone or "Asia/Kolkata"
+            timezone=request.timezone or "Asia/Kolkata",
+            calendar_name=request.calendar_name or "My University Schedule"
         )
         return {
             "status": "success",

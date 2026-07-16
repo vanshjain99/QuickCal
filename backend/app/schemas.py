@@ -39,12 +39,26 @@ class TimetableEvent(BaseModel):
         ...,
         description="List of weekdays on which this event repeats. By default, it contains at least the primary day_of_week."
     )
+    category: str = Field(
+        ...,
+        description="The dynamic grouping category for this event determined by schedule traits (e.g. subject code 'CS 401', professor name, or shift type)."
+    )
+    color_id: str = Field(
+        ...,
+        description="Google Calendar event colorId (a string representation of integers '1' through '11') used to visually group related events."
+    )
 
 class ScheduleExtractionResponse(BaseModel):
     """
-    Wrapper schema containing the list of all parsed timetable events.
+    Wrapper schema containing the list of all parsed timetable events and a contextual name for the schedule.
     """
+    calendar_name: str = Field(
+        ...,
+        description="A contextual name for the schedule calendar (e.g. 'Fall 2026 - B.Tech CSE', 'Shift Chart - Q3') parsed from headers/logos/titles."
+    )
     events: List[TimetableEvent] = Field(
         ..., 
         description="List of all extracted timetable events."
     )
+
+
