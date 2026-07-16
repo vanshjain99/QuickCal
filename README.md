@@ -20,13 +20,12 @@ https://github.com/user-attachments/assets/1cde0a37-33e8-4ed2-8c97-ddcced1b2931
 
 ---
 
-## 🚀 Key Features
-
-- **AI-Powered Layout Analysis**: Uses Google's **Gemini 3.1 Flash-Lite** (`gemini-3.1-flash-lite`) via the `google-genai` SDK to automatically perform 2D grid document alignment and layout analysis. It detects weekdays, time slots, course/event titles, and room locations.
+- **AI-Powered Layout & Contextual Analysis**: Uses Google's **Gemini 3.1 Flash-Lite** (`gemini-3.1-flash-lite`) via the `google-genai` SDK to perform advanced 2D grid document alignment. It automatically parses course/event titles, time slots, days of the week, locations, and extracts a customized **contextual name** for the schedule based on titles or logos (e.g., "B.Tech CSE Sem 8").
 - **Multi-Format Support**: Instantly uploads and parses PNG, JPG, JPEG, PDF documents, or Excel (`.xls`, `.xlsx`) spreadsheets.
+- **Dynamic Grouping & Smart Color Allocation**: Automatically categorizes timetable items (e.g., distinguishing between `LECTURE`, `PRACTICAL`, and `TUTORIAL`) and maps them to distinct Google Calendar colors (colorIds 1 to 11) for high visual scannability.
 - **Adaptive Theme Engine**: Built-in theme toggle with `localStorage` caching to eliminate flashing. The site defaults to **Dark Mode on desktop screens** (>=768px) and **Light Mode on mobile screens** to align with platform design aesthetics.
-- **Interactive Review Workspace**: A sleek responsive workspace that allows you to inspect, modify, add, or delete extracted schedule events (times, days, titles, locations, and recurrence list) in real-time before syncing.
-- **One-Click Google Calendar Sync**: Integrates with the **Google Calendar API** client-side (using Google Identity Services OAuth 2.0 flow) to automatically schedule recurring weekly events on your primary calendar.
+- **Interactive Review Workspace**: A sleek responsive workspace that allows you to inspect, modify, add, or delete extracted schedule events (times, days, titles, locations, custom categories, color dropdowns, and recurrence list) and customize the calendar name before syncing.
+- **Isolated Calendar Injection & Safety Valve**: Integrates with the **Google Calendar API** client-side (using Google Identity Services OAuth 2.0 flow) to provision a dedicated secondary calendar and inject events into it. Your primary calendar remains completely clean, providing a "one-click safety valve" to permanently delete the calendar or refresh it when your schedule changes.
 - **Support Contact Pipeline**: Integrated contact form submitting queries directly to a FormSubmit AJAX endpoint from the client's browser (requiring no backend email setup or credentials).
 - **SEO & Discoverability**: Automatic compilation of dynamic XML sitemaps (`sitemap-index.xml`, `sitemap-0.xml`) and dynamic `robots.txt` configuration for search engine crawlers.
 - **Privacy First**: Processed through secure ephemeral pipelines. We do not store your uploaded documents, schedule data, or Google OAuth credentials.
